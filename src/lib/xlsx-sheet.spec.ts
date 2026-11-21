@@ -20,6 +20,17 @@ describe("parseXlsxSheet", () => {
       { adm2_name: "Itauguá", adm2_pcode: "" },
     ]);
   });
+
+  it("saltea filas de título antes del encabezado si se le pide", () => {
+    const titled =
+      '<worksheet><sheetData><row r="1"><c r="A1" t="inlineStr"><is><t>Relación de municipios</t></is></c></row>' +
+      sheet.slice("<worksheet><sheetData>".length);
+
+    expect(parseXlsxSheet(shared, titled, { skipRows: 1 })).toEqual([
+      { adm2_name: "Azote'y", adm2_pcode: "PY0102" },
+      { adm2_name: "Itauguá", adm2_pcode: "" },
+    ]);
+  });
 });
 
 describe("sheetPath", () => {

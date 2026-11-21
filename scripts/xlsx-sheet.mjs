@@ -52,12 +52,15 @@ export function sheetPath(workbookXml, relsXml, name) {
 
 /**
  * Filas de una hoja de XLSX como objetos, con la primera fila de encabezado.
+ * `skipRows` saltea filas de título que algunas planillas oficiales ponen
+ * antes del encabezado (la Relación de municipios del INE trae una).
  *
  * @param {string} sharedStringsXml
  * @param {string} sheetXml
+ * @param {{ skipRows?: number }} [options]
  * @returns {Record<string, string>[]}
  */
-export function parseXlsxSheet(sharedStringsXml, sheetXml) {
+export function parseXlsxSheet(sharedStringsXml, sheetXml, options = {}) {
   const shared = [...sharedStringsXml.matchAll(/<si>([\s\S]*?)<\/si>/g)].map(
     (match) => textOf(match[1]),
   );
@@ -84,7 +87,7 @@ export function parseXlsxSheet(sharedStringsXml, sheetXml) {
     },
   );
 
-  const [header, ...body] = rows;
+  const [header, ...body] = rows.slice(options.skipRows ?? 0);
   if (!header) return [];
   const columns = [...header].filter(([, key]) => key);
   return body
@@ -99,8 +102,9 @@ export function parseXlsxSheet(sharedStringsXml, sheetXml) {
 /**
  * Hoja de un XLSX por nombre; sin nombre, la primera.
  * @param {Buffer} book @param {string | null} name
+ * @param {{ skipRows?: number }} [options]
  */
-export function readXlsxSheet(book, name) {
+export function readXlsxSheet(book, name, options = {}) {
   const workbook = readZipEntry(book, "xl/workbook.xml").toString();
   const rels = readZipEntry(book, "xl/_rels/workbook.xml.rels").toString();
   const sheetName = name ?? workbook.match(/<sheet\s[^>]*name="([^"]+)"/)?.[1];
@@ -110,5 +114,5 @@ export function readXlsxSheet(book, name) {
     book,
     sheetPath(workbook, rels, sheetName),
   ).toString();
-  return parseXlsxSheet(shared, sheet);
+  return parseXlsxSheet(shared, sheet, options);
 }

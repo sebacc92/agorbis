@@ -130,6 +130,8 @@ Archivos de rsc-harness (D102).
 | [Nivel 4 de El Salvador, Nicaragua y Panamá](ftd/nivel4-salvador-nicaragua-panama.md) | D142–D144: 44 y 153 municipios desde Wikidata con control oficial, y 81 distritos de la ANATI; borradores SQL sin aplicar | 2026-11-20 |
 | [Nivel 4 de República Dominicana](ftd/nivel4-republica-dominicana.md) | D145: 154 municipios del COD-AB (ONE) con coordenadas; La Victoria y Cuba pendientes | 2026-11-20 |
 | [Nivel 4 de Haití](ftd/nivel4-haiti.md) | D146: 140 comunas del COD-AB (CNIGS) con coordenadas y tildes francesas; las comunas posteriores a 2018 pendientes | 2026-11-21 |
+| [Nivel 4 de España](ftd/nivel4-espana.md) | D148: 8.130 municipios del INE bajo sus comunidades, slug con la provincia, sin coordenadas; borrador SQL sin aplicar | 2026-11-21 |
+| [Nivel 4 de Estados Unidos](ftd/nivel4-estados-unidos.md) | D149: 3.142 condados y equivalentes del Census Gazetteer con coordenadas; DC y Kalawao fuera; borrador SQL sin aplicar | 2026-11-21 |
 | [Acuerdos · buscador en todo el país](ftd/acuerdos-buscador-todo-el-pais.md) | Con el nivel 4 el buscador sólo veía 500 comunidades; ahora busca en el servidor y el E2E de acuerdos vuelve a pasar | 2026-11-21 |
 | [Manual con menú lateral](ftd/manual-menu-lateral.md) | `/manual` con menú a la izquierda, 15 preguntas esenciales, 86 de detalle en 13 temas, buscador y ancla por pregunta | 2026-11-21 |
 | [Migración 0074 · acuerdos](../../supabase/migrations/0074_agreements.sql) | Promovida el 09-11-2026 con autorización del responsable; test en `supabase/tests/agreements_checks.sql` | 2026-11-09  |

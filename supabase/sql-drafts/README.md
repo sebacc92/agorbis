@@ -31,6 +31,8 @@ evidencia sin que nadie haya revisado nada.
 | `0092_panama_local_governments.sql`               | **Borrador, no aplicar.** 81 distritos de Panamá como nivel 4, de la ANATI (D144); generado por `scripts/build-list-level4-draft.mjs panama`. Va después de `0091`                                                        |
 | `0093_republica_dominicana_local_governments.sql` | **Borrador, no aplicar.** 154 municipios de República Dominicana como nivel 4, con coordenadas (D145); falta La Victoria. Generado por `scripts/build-cod-ab-level4-draft.mjs republica-dominicana`. Va después de `0092` |
 | `0094_haiti_local_governments.sql`                | **Borrador, no aplicar.** 140 comunas de Haití como nivel 4, con coordenadas (D146); faltan las comunas posteriores a 2018. Generado por `scripts/build-cod-ab-level4-draft.mjs haiti`. Va después de `0093`              |
+| `0095_espana_local_governments.sql`               | **Borrador, no aplicar.** 8.130 municipios de España como nivel 4, sin coordenadas (D148); generado por `scripts/build-espana-level4-draft.mjs`. Va después de `0094`                                                     |
+| `0096_estados_unidos_local_governments.sql`       | **Borrador, no aplicar.** 3.142 condados y equivalentes de Estados Unidos como nivel 4, con coordenadas (D149); generado por `scripts/build-estados-unidos-level4-draft.mjs`. Va después de `0095`                        |
 
 Para proponer uno de estos cambios hay que reescribirlo con un número libre,
 llevarlo a `supabase/migration-drafts/` en una PR propia que actualice la

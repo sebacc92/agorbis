@@ -5490,3 +5490,66 @@ exige publicar el domicilio en el sitio.
 
 **Reversión.** Antes de publicar: descartar la rama. Después de publicar no
 hay reversión real: lo publicado pudo ser copiado.
+
+### D148 · España entra al nivel 4 con sus 8.130 municipios, bajo las comunidades autónomas
+
+**Fecha:** 21 de noviembre de 2026. **Estado:** decidida por el responsable,
+que pidió España y Estados Unidos en una tanda y eligió los municipios frente
+a las provincias; borrador SQL sin aplicar en `supabase/sql-drafts/`.
+
+**Qué se decide.**
+
+- **Nivel 4 = los municipios,** cada uno con su ayuntamiento, de la Relación
+  de municipios del INE a 1 de enero de 2025 (reutilización con atribución),
+  colgados directamente de su comunidad autónoma. Las provincias no son un
+  nivel: quedan en la descripción ("Municipio de la provincia de Sevilla").
+  El generador exige 8.132 filas en la fuente.
+- **Ceuta y Melilla** son un municipio cada una y quedan en su nivel 3.
+- **Slug con la provincia, siempre** (`espana-sevilla-sevilla`): hay 17
+  nombres repetidos entre provincias, "Madrid" y "València" chocarían con su
+  comunidad, y un homónimo nuevo no obliga a cambiar URLs existentes.
+- **Nombres en el orden en que se leen:** el INE pospone el artículo
+  ("Bonillo, El"); el generador lo pasa adelante con una lista cerrada de
+  artículos y respeta las formas bilingües oficiales ("Donostia/San
+  Sebastián").
+- **Sin coordenadas:** la Relación no las trae. El GPS del onboarding sugiere
+  la comunidad.
+- `scripts/xlsx-sheet.mjs` acepta `skipRows` porque la planilla trae una fila
+  de título antes del encabezado.
+
+**Qué no cambia.** RLS, `is_member`, cupos y plazos por nivel. Los nombres en
+inglés de las comunidades en 0016 ("Andalusia") quedan para otra decisión.
+
+**Reversión.** Borrar las comunidades de nivel 4 bajo `earth.europe.espana`
+que no tengan contenido ni residentes. Documento:
+`02-DOCS/wiki/ftd/nivel4-espana.md`.
+
+### D149 · Estados Unidos entra al nivel 4 con sus condados y equivalentes
+
+**Fecha:** 21 de noviembre de 2026. **Estado:** decidida por el responsable,
+que eligió los condados frente a las ciudades; borrador SQL sin aplicar en
+`supabase/sql-drafts/`.
+
+**Qué se decide.**
+
+- **Nivel 4 = los condados y sus equivalentes** del 2024 Gazetteer del U.S.
+  Census Bureau (dominio público), con su punto interior: son la única unidad
+  local que cubre todo el territorio. Entran las parroquias de Luisiana, los
+  boroughs y áreas censales de Alaska, las ciudades independientes (Virginia,
+  Baltimore, St. Louis, Carson City) y las 9 regiones de planificación de
+  Connecticut, aunque algunas no tengan gobierno de condado: reemplazarlas
+  dejaría gente sin comunidad. 3.142 en total; el generador exige 3.222
+  filas en la fuente.
+- **Fuera:** el Distrito de Columbia, que queda en su nivel 3; Puerto Rico y
+  los territorios, que no son nivel 3 en la base; y Kalawao (Hawái), sin
+  gobierno propio, como Fernando de Noronha (D137).
+- **Slug con la sigla del estado y el nombre completo**
+  (`estados-unidos-va-fairfax-county`), como Brasil, porque Virginia tiene
+  "Fairfax County" y "Fairfax city".
+- **Las ciudades** quedan para un nivel 5 futuro.
+
+**Qué no cambia.** RLS, `is_member`, cupos y plazos por nivel.
+
+**Reversión.** Borrar las comunidades de nivel 4 bajo
+`earth.north-america.estados-unidos` que no tengan contenido ni residentes.
+Documento: `02-DOCS/wiki/ftd/nivel4-estados-unidos.md`.
