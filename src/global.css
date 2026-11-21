@@ -1,0 +1,1077 @@
+@import "tailwindcss";
+
+/* El dark mode se activa por la clase `.dark` en <html>, puesta por el script
+   inline de `root.tsx` (que respeta `prefers-color-scheme` + preferencia guardada). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Reserva inicial antes de medir la navegación inferior con ResizeObserver. */
+:root {
+  --bottom-nav-height: calc(
+    3.5625rem + max(env(safe-area-inset-bottom), 0.75rem)
+  );
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --bottom-nav-height: 0px;
+  }
+}
+
+/* El Worker es la barrera autoritativa; esta regla evita prometer en la UI una
+   interacción que el preview público va a rechazar. Se ocultan formularios y
+   accesos de cuenta, pero se conservan navegación, tema y lectura pública. */
+[data-agorbis-launch-mode="public-read-only"] form,
+[data-agorbis-launch-mode="public-read-only"] a[href^="/auth/"],
+[data-agorbis-launch-mode="public-read-only"] a[href^="/consentimiento"],
+[data-agorbis-launch-mode="public-read-only"] a[href^="/ingresar"],
+[data-agorbis-launch-mode="public-read-only"] a[href^="/onboarding"],
+[data-agorbis-launch-mode="public-read-only"] a[href^="/perfil"],
+[data-agorbis-launch-mode="public-read-only"] a[href^="/recuperar"],
+[data-agorbis-launch-mode="public-read-only"] a[href^="/reenviar-confirmacion"],
+[data-agorbis-launch-mode="public-read-only"] a[href^="/registro"],
+[data-agorbis-launch-mode="public-read-only"] a[href$="/nuevo"],
+[data-agorbis-launch-mode="public-read-only"] a[href$="/nueva"],
+[data-agorbis-launch-mode="public-read-only"] a[href*="/solicitar"] {
+  display: none !important;
+}
+
+/* =============================================================================
+   Identidad: ultravioleta
+   -----------------------------------------------------------------------------
+   Violeta primario, ámbar como complementario cálido y verde azulado para
+   datos. Los neutros llevan tinte violeta (hue ~265) en vez de ser grises
+   puros, para que toda la interfaz se sienta de la misma familia.
+
+   Regla de contraste que atraviesa toda la paleta: los tonos 500 de ámbar y
+   teal son *rellenos*, no texto. Sobre blanco dan 2.15:1 y 2.49:1 — muy por
+   debajo de AA. Para texto sobre fondo claro se usa el 700; sobre fondo oscuro,
+   el 400. Los tokens semánticos de más abajo ya resuelven esa elección.
+   ============================================================================= */
+@theme {
+  /* ---- Primario · violeta ---- */
+  --color-brand-50: #f5f3ff;
+  --color-brand-100: #ede9fe;
+  --color-brand-200: #ddd6fe;
+  --color-brand-300: #c4b5fd;
+  --color-brand-400: #a78bfa; /* primario en oscuro */
+  --color-brand-500: #8b5cf6;
+  --color-brand-600: #7c3aed; /* primario en claro */
+  --color-brand-700: #6d28d9; /* texto violeta sobre claro (7.1:1) */
+  --color-brand-800: #5b21b6;
+  --color-brand-900: #4c1d95;
+  --color-brand-950: #2e1065;
+
+  /* ---- Acento · ámbar (complementario del violeta) ---- */
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24; /* texto ámbar sobre oscuro */
+  --color-accent-500: #f59e0b; /* relleno de CTA */
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309; /* texto ámbar sobre claro (5.0:1) */
+  --color-accent-800: #92400e;
+  --color-accent-900: #78350f;
+  --color-accent-950: #451a03; /* texto sobre relleno ámbar (7.0:1) */
+
+  /* ---- Datos · verde azulado ---- */
+  --color-data-50: #f0fdfa;
+  --color-data-100: #ccfbf1;
+  --color-data-200: #99f6e4;
+  --color-data-300: #5eead4;
+  --color-data-400: #2dd4bf;
+  --color-data-500: #14b8a6;
+  --color-data-600: #0d9488;
+  --color-data-700: #0f766e;
+  --color-data-800: #115e59;
+  --color-data-900: #134e4a;
+  --color-data-950: #042f2e;
+
+  /* ---- Éxito · esmeralda (distinto del ámbar, para no confundirlos) ---- */
+  --color-success-50: #ecfdf5;
+  --color-success-100: #d1fae5;
+  --color-success-200: #a7f3d0;
+  --color-success-300: #6ee7b7;
+  --color-success-400: #34d399;
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-success-700: #047857;
+  --color-success-800: #065f46;
+  --color-success-900: #064e3b;
+  --color-success-950: #022c22;
+
+  /* ---- Alerta · naranja, deliberadamente más rojo que el ámbar del acento,
+          para que una advertencia no se lea como un CTA ---- */
+  --color-warn-50: #fff7ed;
+  --color-warn-100: #ffedd5;
+  --color-warn-300: #fdba74;
+  --color-warn-400: #fb923c;
+  --color-warn-500: #f97316;
+  --color-warn-600: #ea580c;
+  --color-warn-700: #c2410c;
+  --color-warn-950: #431407;
+
+  /* ---- Error · rosa ---- */
+  --color-danger-50: #fff1f2;
+  --color-danger-100: #ffe4e6;
+  --color-danger-300: #fda4af;
+  --color-danger-400: #fb7185;
+  --color-danger-500: #f43f5e;
+  --color-danger-600: #e11d48;
+  --color-danger-700: #be123c;
+  --color-danger-950: #4c0519;
+
+  /* ---- Neutros con tinte violeta (hue ~265, saturación 6-10%) ---- */
+  --color-mist-50: #faf9fc;
+  --color-mist-100: #f4f2f8;
+  --color-mist-200: #e9e6f0;
+  --color-mist-300: #d6d1e3;
+  --color-mist-400: #aca4c0;
+  --color-mist-500: #837a99;
+  --color-mist-600: #635b78; /* texto secundario sobre claro (6.4:1) */
+  --color-mist-700: #4b445c;
+  --color-mist-800: #332e40;
+  --color-mist-900: #211d2b;
+
+  /* ---- Noche con tinte violeta (nunca negro puro) ---- */
+  --color-night-700: #383152;
+  --color-night-800: #2a2440;
+  --color-night-850: #221d35;
+  --color-night-900: #1a162a;
+  --color-night-950: #12101f;
+
+  /* ---- Tipografía ----
+     El cuerpo usa la pila del sistema: idéntica para todos, sin bytes, sin
+     FOUT y sin un tercero en la ruta crítica. Para un producto cívico pensado
+     para teléfonos modestos y datos medidos, es lo más barato.
+
+     Los títulos llevan Manrope (D123), servida desde el propio dominio:
+     un solo `.woff2` del subconjunto latino en `public/fonts/`, con
+     `font-display: swap`. Nada de Google Fonts ni CDN: la CSP ya permite
+     `font-src 'self'` y no se suma ningún tercero (D76). Si el archivo no
+     carga, la pila cae al sistema y el texto sigue legible. */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  --font-display:
+    "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* ---- Escala de títulos (D123, fluida en D125) ----
+     Seis pasos con interlineado y espaciado propios: un h1 de página, un
+     título de sección y un título de tarjeta ya no pesan igual. Los tres
+     grandes escalan con el ancho (`clamp`): en un teléfono de 390 px una
+     pregunta larga ocupaba cuatro líneas a 44 px. */
+  --text-display-xl: clamp(2rem, 1.3rem + 3vw, 2.75rem);
+  --text-display-xl--line-height: 1.05;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-lg: clamp(1.625rem, 1.2rem + 1.8vw, 2rem);
+  --text-display-lg--line-height: 1.1;
+  --text-display-lg--letter-spacing: -0.025em;
+  --text-display-md: clamp(1.3125rem, 1.1rem + 0.9vw, 1.5rem);
+  --text-display-md--line-height: 1.2;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-display-sm: 1.25rem;
+  --text-display-sm--line-height: 1.3;
+  --text-display-sm--letter-spacing: -0.015em;
+  --text-display-xs: 1.0625rem;
+  --text-display-xs--line-height: 1.35;
+  --text-display-xs--letter-spacing: -0.01em;
+
+  /* ---- Tamaños chicos de texto (D96) ----
+     Etiquetas, contadores y fechas usaban `text-[11px]` y `text-[10px]`. En
+     píxeles no siguen la escala de Accesibilidad, que cambia el `font-size`
+     de `<html>`, ni la letra elegida en el navegador: el resto del texto
+     crecía y ellos no. En rem crecen con todo. No llevan interlineado
+     propio, igual que los valores arbitrarios que reemplazan, para no mover
+     nada a escala 100 %. */
+  --text-2xs: 0.6875rem; /* 11 px */
+  --text-3xs: 0.625rem; /* 10 px */
+
+  /* ---- Radios ---- */
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+
+  /* ---- Anchos semánticos (ver D30) ---- */
+  --width-reading: 42rem; /* ~68 caracteres: prosa larga */
+  --width-content: 96rem; /* listados, formularios, tabs; 1536px usa un monitor de 1920 (D111) */
+
+  /* ---- Sombras suaves, con el tinte violeta de la marca ---- */
+  --shadow-soft:
+    0 1px 2px rgb(46 16 101 / 0.05), 0 4px 16px rgb(46 16 101 / 0.07);
+  --shadow-lift:
+    0 2px 4px rgb(46 16 101 / 0.06), 0 12px 32px rgb(46 16 101 / 0.12);
+
+  /* ---- Movimiento (D124) ----
+     Tres duraciones y dos curvas para toda la interfaz. Había siete
+     animaciones con curvas propias y los botones crecían al pasar el mouse.
+     `fast` es feedback inmediato (hover, foco), `base` es entrar o salir,
+     `slow` es algo que crece o se despliega. `ease-out` para lo que aparece,
+     `ease-spring` sólo para confirmaciones puntuales. */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
+
+  /* ---- Animaciones ---- */
+  --animate-bar-grow: bar-grow var(--duration-slow) var(--ease-out) both;
+  --animate-fade-in: fade-in var(--duration-base) var(--ease-out) both;
+  --animate-shimmer: shimmer 1.8s ease-in-out infinite;
+  --animate-scale-pop: scale-pop var(--duration-base) var(--ease-spring) both;
+  --animate-spring-tap: spring-tap var(--duration-base) var(--ease-spring) both;
+  --animate-pulse-subtle: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-bottom-sheet: bottom-sheet-up var(--duration-slow) var(--ease-out)
+    both;
+  /* Avance de navegación: arranca rápido y frena cerca del final. Nunca llega
+     al 100% porque no sabemos cuánto falta; el barrido termina cuando la
+     página nueva reemplaza la barra. */
+  --animate-route-progress: route-progress 2.4s cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes scale-pop {
+  0% {
+    transform: scale(0.92);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* `transform-origin` es físico y las barras usan `origin-left`: en un idioma
+   que se lee de derecha a izquierda, la barra nace pegada al borde equivocado
+   y crece hacia afuera del riel. Hoy sólo hay español e inglés, así que no se
+   ve; queda resuelto para cuando se sume el primer idioma RTL —que es
+   exactamente el momento en que nadie se acordaría de esto—. */
+[dir="rtl"] .origin-left {
+  transform-origin: right;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes route-progress {
+  from {
+    transform: scaleX(0.03);
+  }
+  to {
+    transform: scaleX(0.92);
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes spring-tap {
+  0% {
+    transform: scale(0.94);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes bottom-sheet-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Tokens semánticos de superficie: una sola fuente de verdad para
+   claro/oscuro. Los componentes usan `bg-surface`, `text-ink`, etc.
+   y nunca un color crudo (D23).
+   --------------------------------------------------------------- */
+@layer base {
+  :root {
+    --surface-app: var(--color-mist-50);
+    --surface-card: #ffffff;
+    --surface-muted: var(--color-mist-100);
+    --surface-inset: var(--color-mist-200);
+    --surface-overlay: #ffffff;
+    --border-subtle: var(--color-mist-300);
+    --border-strong: var(--color-mist-400);
+    /* Los límites de campos son información del control, no decoración:
+       mist-500 conserva al menos 3:1 contra las superficies de ambos temas. */
+    --border-control: var(--color-mist-500);
+    --border-glow: transparent;
+    --ink-strong: #151022;
+    --ink: #262035;
+    --ink-muted: #48405d;
+    /* Metadata sigue siendo secundaria por tamaño/peso, conservando contraste WCAG AAA bajo luz solar */
+    --ink-faint: #48405d;
+
+    /* Colores que cambian de tono entre temas para mantener contraste AA. */
+    --tint-brand: var(--color-brand-600);
+    --tint-brand-text: var(--color-brand-700);
+    --tint-accent-text: var(--color-accent-700);
+    --tint-data-text: var(--color-data-700);
+    --tint-success-text: var(--color-success-700);
+    --tint-warn-text: var(--color-warn-700);
+    --tint-danger-text: var(--color-danger-700);
+
+    /* Matiz por nivel geográfico: del violeta más profundo (global) al más
+       claro (ciudad). Ayuda a ubicarse en la jerarquía sin leer la etiqueta. */
+    --level-0: var(--color-brand-900);
+    --level-1: var(--color-brand-800);
+    --level-2: var(--color-brand-700);
+    --level-3: var(--color-brand-600);
+    --level-4: var(--color-brand-500);
+    --level-5: var(--color-brand-400);
+
+    /* Un color por tipo de contenido (D123). El violeta vuelve a ser sólo
+       navegación y acción primaria; cada tipo se reconoce por su familia en
+       badge, pestaña, acento de tarjeta y cabecera. Los textos dan ≥4.5:1
+       sobre blanco; los acentos sirven para bordes y rellenos, no para texto. */
+    --kind-claim: #e11d48;
+    --kind-claim-text: #be123c;
+    --kind-claim-bg: #fff1f2;
+    --kind-poll: #2563eb;
+    --kind-poll-text: #1d4ed8;
+    --kind-poll-bg: #eff6ff;
+    --kind-debate: #0d9488;
+    --kind-debate-text: #0f766e;
+    --kind-debate-bg: #f0fdfa;
+    --kind-project: #ea580c;
+    --kind-project-text: #c2410c;
+    --kind-project-bg: #fff7ed;
+    --kind-agreement: #ca8a04;
+    --kind-agreement-text: #854d0e;
+    --kind-agreement-bg: #fefce8;
+
+    color-scheme: light;
+  }
+
+  .dark {
+    --surface-app: #0e0a1b;
+    --surface-card: #171128;
+    --surface-muted: #201838;
+    --surface-inset: #292044;
+    --surface-overlay: #231a3d;
+    --border-subtle: #332854;
+    --border-strong: #453770;
+    /* mist-500 también en oscuro: #625587 daba 2,94:1 contra el fondo y
+       2,76:1 contra la tarjeta; el límite del campo necesita 3:1 (WCAG 1.4.11). */
+    --border-control: var(--color-mist-500);
+    --border-glow: rgba(167, 139, 250, 0.16);
+    --ink-strong: #faf8fd;
+    --ink: #ded7ee;
+    --ink-muted: #b7aecd;
+    --ink-faint: #b7aecd;
+
+    --tint-brand: var(--color-brand-400);
+    --tint-brand-text: var(--color-brand-300);
+    --tint-accent-text: var(--color-accent-400);
+    --tint-data-text: var(--color-data-400);
+    --tint-success-text: var(--color-success-400);
+    --tint-warn-text: var(--color-warn-400);
+    --tint-danger-text: var(--color-danger-400);
+
+    /* Invertido: en oscuro el violeta profundo no se distingue del fondo. */
+    --level-0: var(--color-brand-300);
+    --level-1: var(--color-brand-400);
+    --level-2: var(--color-brand-400);
+    --level-3: var(--color-brand-500);
+    --level-4: var(--color-brand-500);
+    --level-5: var(--color-brand-600);
+
+    /* En oscuro el texto sube de luz y el fondo es el acento al 14 %. */
+    --kind-claim: #fb7185;
+    --kind-claim-text: #fda4af;
+    --kind-claim-bg: rgba(244, 63, 94, 0.14);
+    --kind-poll: #60a5fa;
+    --kind-poll-text: #93c5fd;
+    --kind-poll-bg: rgba(59, 130, 246, 0.14);
+    --kind-debate: #2dd4bf;
+    --kind-debate-text: #5eead4;
+    --kind-debate-bg: rgba(20, 184, 166, 0.14);
+    --kind-project: #fb923c;
+    --kind-project-text: #fdba74;
+    --kind-project-bg: rgba(249, 115, 22, 0.14);
+    --kind-agreement: #facc15;
+    --kind-agreement-text: #fde047;
+    --kind-agreement-bg: rgba(234, 179, 8, 0.14);
+
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* El header mide 64px y está pegado arriba: sin esto, cualquier salto a un
+       ancla —el "Saltar al contenido", el índice del manual, un `#seccion`
+       compartido— deja el destino escondido debajo de la barra. Se declara en
+       `html` para que valga también para `:target`.
+
+       Las comunidades reservan además la altura de sus pestañas abajo. */
+    scroll-padding-top: 5rem;
+  }
+
+  html:has([data-community-page]) {
+    /* Los saltos a novedades y el foco deben quedar debajo de ambas barras. */
+    scroll-padding-top: 9rem;
+  }
+
+  @font-face {
+    font-family: "Manrope";
+    font-style: normal;
+    font-weight: 500 800;
+    font-display: swap;
+    src: url("/fonts/manrope-latin.woff2") format("woff2");
+    unicode-range:
+      U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+      U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+      U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  body {
+    background-color: var(--surface-app);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100dvh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--ink-strong);
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  /* Foco visible y consistente. El violeta 500 mantiene ≥3:1 contra ambos
+     fondos, que es lo que pide AA para indicadores no textuales. */
+  :focus-visible {
+    outline: 2.5px solid var(--color-brand-500);
+    outline-offset: 2.5px;
+    border-radius: 0.375rem;
+  }
+
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-brand-950);
+  }
+
+  .dark ::selection {
+    background: var(--color-brand-800);
+    color: #fff;
+  }
+
+  /* Sin View Transitions entre documentos (D124, revertido el mismo día):
+     con la regla `navigation: auto` la navegación sin JavaScript dejaba la
+     instantánea de la página vieja cubriendo la nueva en Chromium headless,
+     y cinco E2E "mediante HTML" vencían esperando un clic que nunca llegaba
+     al botón. El movimiento dentro de la app sigue con los tokens de arriba. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Quien pide más contraste en su sistema no está eligiendo otra estética:
+     está diciendo que los grises intermedios no le alcanzan. Se sube todo lo
+     que la paleta baja a propósito —bordes decorativos, metadata— y se
+     engrosa el foco. No se toca la marca ni los tonos semánticos: ya cumplen
+     AA y cambiarlos alteraría el significado de un estado, no su legibilidad.
+
+     Se redefinen tokens y no reglas sueltas, así que alcanza a toda la
+     interfaz sin repetir una excepción por componente. */
+  @media (prefers-contrast: more) {
+    :root {
+      --border-subtle: var(--color-mist-400);
+      --border-strong: var(--color-mist-500);
+      --ink-muted: var(--color-mist-800);
+      --ink-faint: var(--color-mist-800);
+    }
+
+    .dark {
+      --border-subtle: var(--color-mist-600);
+      --border-strong: var(--color-mist-500);
+      --ink-muted: #e2ddf0;
+      --ink-faint: #e2ddf0;
+    }
+
+    :focus-visible {
+      outline-width: 3px;
+    }
+  }
+
+  /* La misma subida cuando se elige "Alto contraste" en el panel de la app.
+     El panel pone `contrast-more` en <html> (`A11Y_ROOT_CLASSES`), pero un
+     media query no ve clases: sin este bloque la opción no cambiaba nada.
+     Los valores tienen que coincidir con los de arriba; lo comprueba
+     `accessibility-preferences.spec.ts`. */
+  html.contrast-more {
+    --border-subtle: var(--color-mist-400);
+    --border-strong: var(--color-mist-500);
+    --ink-muted: var(--color-mist-800);
+    --ink-faint: var(--color-mist-800);
+  }
+
+  html.contrast-more.dark {
+    --border-subtle: var(--color-mist-600);
+    --border-strong: var(--color-mist-500);
+    --ink-muted: #e2ddf0;
+    --ink-faint: #e2ddf0;
+  }
+
+  html.contrast-more :focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Anchos semánticos. El problema no era el ancho global sino que
+   todo usaba el mismo contenedor: la prosa larga necesita líneas
+   cortas y la grilla de debates necesita el viewport entero.
+   --------------------------------------------------------------- */
+@utility container-reading {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--width-reading);
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+}
+
+@utility container-content {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--width-content);
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+}
+
+@utility container-full {
+  width: 100%;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+}
+
+/* Prosa larga dentro de un contenedor ancho (ej. el cuerpo de un debate). */
+@utility measure {
+  max-width: var(--width-reading);
+}
+
+/* Cada párrafo ciudadano resuelve su dirección sin heredar la del anterior.
+   `overflow-wrap: anywhere` es la otra mitad del problema: una URL pegada sin
+   espacios, o un "AAAAA…" de 300 caracteres, no tiene punto de corte y
+   desbordaba la tarjeta hasta forzar scroll horizontal en toda la página. Va
+   acá y no en cada tarjeta porque esta utilidad ya marca exactamente las
+   superficies que muestran texto escrito por alguien. */
+@utility ugc-text {
+  unicode-bidi: plaintext;
+  overflow-wrap: anywhere;
+  line-height: 1.625;
+
+  & p + p {
+    margin-top: 0.75rem;
+  }
+
+  & blockquote {
+    border-inline-start: 3px solid var(--tint-brand);
+    padding-inline-start: 0.875rem;
+    font-style: italic;
+    opacity: 0.9;
+    margin: 0.75rem 0;
+  }
+
+  & ul,
+  & ol {
+    margin: 0.5rem 0;
+    padding-inline-start: 1.25rem;
+  }
+
+  & ul {
+    list-style-type: disc;
+  }
+
+  & ol {
+    list-style-type: decimal;
+  }
+}
+
+/* El `<select>` usa `appearance-none` para poder llevar el mismo borde y radio
+   que el resto de los campos, pero eso también borra la flecha nativa: sin
+   esto un desplegable se ve exactamente igual que un campo de texto, con 36 px
+   de padding derecho reservados para un ícono que nunca se dibujaba. El SVG va
+   embebido para no pedir un request por campo. */
+@utility select-chevron {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23837a99' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 0.85rem;
+
+  /* En árabe o hebreo el campo se lee al revés y la flecha también. */
+  &:dir(rtl) {
+    background-position: left 0.85rem center;
+  }
+
+  /* mist-500 se pierde sobre el fondo oscuro; se sube a mist-400. */
+  .dark & {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23aca4c0' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  }
+}
+
+/* Los controles chicos (32 px de alto) quedan por debajo del mínimo táctil de
+   44 px de WCAG 2.5.8. En vez de agrandarlos —lo que rompería la densidad de
+   los listados en escritorio— se extiende el área tocable con un pseudo, y
+   sólo donde hay dedo: con mouse el blanco de 32 px nunca fue el problema. */
+@utility touch-target {
+  position: relative;
+
+  @media (pointer: coarse) {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      height: 100%;
+      min-height: 44px;
+      width: 100%;
+      min-width: 44px;
+    }
+  }
+}
+
+/* Los tokens semánticos se declaran como colores del tema y no como
+   `@utility` fijas: una utilidad fija no admite el modificador de opacidad,
+   así que `bg-surface/90` o `border-subtle/80` no generaban CSS y la cabecera,
+   la barra inferior y los menús quedaban transparentes. Como color del tema
+   también funcionan en degradados (`via-surface`), anillos y divisores.
+
+   `inline` hace que cada utilidad use el `var()` de origen: el valor se
+   resuelve en el elemento que la usa, así que el cambio a `.dark` llega
+   aunque la clase no esté en `<html>`. */
+@theme inline {
+  --color-app: var(--surface-app);
+  --color-surface: var(--surface-card);
+  --color-muted: var(--surface-muted);
+  --color-inset: var(--surface-inset);
+  --color-ink: var(--ink);
+  --color-ink-strong: var(--ink-strong);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-subtle: var(--border-subtle);
+  --color-strong: var(--border-strong);
+  --color-control: var(--border-control);
+  --color-kind-claim: var(--kind-claim);
+  --color-kind-claim-text: var(--kind-claim-text);
+  --color-kind-claim-bg: var(--kind-claim-bg);
+  --color-kind-poll: var(--kind-poll);
+  --color-kind-poll-text: var(--kind-poll-text);
+  --color-kind-poll-bg: var(--kind-poll-bg);
+  --color-kind-debate: var(--kind-debate);
+  --color-kind-debate-text: var(--kind-debate-text);
+  --color-kind-debate-bg: var(--kind-debate-bg);
+  --color-kind-project: var(--kind-project);
+  --color-kind-project-text: var(--kind-project-text);
+  --color-kind-project-bg: var(--kind-project-bg);
+  --color-kind-agreement: var(--kind-agreement);
+  --color-kind-agreement-text: var(--kind-agreement-text);
+  --color-kind-agreement-bg: var(--kind-agreement-bg);
+}
+
+/* Cabecera de comunidad teñida con el matiz de su nivel geográfico (D123):
+   el color ya existía como `--level-n`; acá pasa a una banda suave. */
+@utility level-band {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--level-tint, var(--level-3)) 14%, transparent),
+    transparent 100%
+  );
+}
+
+/* Las columnas de debate no usan emojis: un número estable, una franja y un
+   tinte permiten reconocer cada territorio incluso cuando se reordenan. */
+.debate-column {
+  --column-accent: var(--color-brand-500);
+  border-top-color: var(--column-accent);
+}
+
+.debate-column-header {
+  background-color: color-mix(
+    in srgb,
+    var(--column-accent) 8%,
+    var(--surface-card)
+  );
+}
+
+.debate-column-number {
+  background-color: color-mix(
+    in srgb,
+    var(--column-accent) 16%,
+    var(--surface-card)
+  );
+  color: color-mix(in srgb, var(--column-accent) 82%, var(--ink-strong));
+}
+
+.debate-column-accent-0 {
+  --column-accent: #7c3aed;
+}
+.debate-column-accent-1 {
+  --column-accent: #0f766e;
+}
+.debate-column-accent-2 {
+  --column-accent: #b45309;
+}
+.debate-column-accent-3 {
+  --column-accent: #0369a1;
+}
+.debate-column-accent-4 {
+  --column-accent: #be185d;
+}
+.debate-column-accent-5 {
+  --column-accent: #4338ca;
+}
+.debate-column-accent-6 {
+  --column-accent: #15803d;
+}
+.debate-column-accent-7 {
+  --column-accent: #c2410c;
+}
+
+.debate-column-mine {
+  border-top-color: var(--color-success-500);
+}
+
+.debate-column-mine .debate-column-number {
+  background-color: color-mix(
+    in srgb,
+    var(--color-success-500) 18%,
+    var(--surface-card)
+  );
+  color: var(--tint-success-text);
+}
+
+/* Texto de color que ya resuelve el tono correcto en cada tema. */
+@utility text-brand {
+  color: var(--tint-brand-text);
+}
+@utility text-accent {
+  color: var(--tint-accent-text);
+}
+@utility text-data {
+  color: var(--tint-data-text);
+}
+@utility text-success {
+  color: var(--tint-success-text);
+}
+@utility text-warn {
+  color: var(--tint-warn-text);
+}
+@utility text-danger {
+  color: var(--tint-danger-text);
+}
+
+/* Scrollbars discretas para la grilla de debates. */
+@utility scrollbar-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+  &::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--border-strong);
+    border-radius: 9999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+/* Países del mapamundi: el borde no cambia de grosor al ampliar el SVG. */
+@layer components {
+  /* Los radios de selección visual viven ocultos dentro de tarjetas. El foco
+     del input recortado no se veía; se proyecta sobre la superficie que la
+     persona realmente reconoce y activa. */
+  .choice-control:has(input:focus-visible) {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+
+  .world-map-shell:fullscreen {
+    height: 100vh;
+    overflow: auto;
+    background: var(--surface-app);
+    padding: 1rem;
+  }
+
+  .world-map-shell:fullscreen > :is(div, section) {
+    min-height: calc(100vh - 2rem);
+  }
+
+  .world-map-country {
+    cursor: pointer;
+    fill: var(--color-brand-200);
+    stroke: var(--color-brand-800);
+    stroke-width: 0.65;
+    transition:
+      fill 120ms ease,
+      stroke 120ms ease;
+  }
+
+  .world-map-country:hover,
+  .world-map-country-hovered {
+    fill: var(--color-brand-500);
+    stroke: var(--color-brand-950);
+  }
+
+  .world-map-country-selected {
+    fill: var(--color-accent-400);
+    stroke: var(--color-accent-950);
+    stroke-width: 1.35;
+  }
+
+  .world-map-country:focus-visible {
+    outline: none;
+    fill: var(--color-accent-300);
+    stroke: var(--color-brand-950);
+    stroke-width: 2;
+  }
+
+  .dark .world-map-country {
+    fill: var(--color-brand-800);
+    stroke: var(--color-brand-200);
+  }
+
+  .dark .world-map-country:hover,
+  .dark .world-map-country-hovered {
+    fill: var(--color-brand-500);
+    stroke: #fff;
+  }
+
+  .dark .world-map-country-selected {
+    fill: var(--color-accent-500);
+    stroke: var(--color-accent-100);
+  }
+
+  .world-map-marker {
+    cursor: pointer;
+    fill: var(--color-accent-400);
+    stroke: var(--color-brand-950);
+    stroke-width: 2.5;
+  }
+
+  .world-map-marker:hover,
+  .world-map-marker-hovered,
+  .world-map-marker:focus-visible {
+    outline: none;
+    fill: var(--color-accent-200);
+    stroke: var(--color-brand-600);
+    stroke-width: 4;
+  }
+
+  .world-map-marker-selected {
+    fill: var(--color-brand-600);
+    stroke: var(--color-accent-200);
+    stroke-width: 4;
+  }
+
+  @media (width < 40rem) {
+    .world-map-shell:fullscreen {
+      padding: 0;
+    }
+
+    .world-map-shell:fullscreen > :is(div, section) {
+      min-height: 100vh;
+      border: 0;
+      border-radius: 0;
+    }
+  }
+}
+
+/* Pista de scroll para las pestañas de comunidad. El degradado sólo aparece
+   cuando el contenido efectivamente desborda: `scroll-marker` no está
+   disponible, así que se usa el truco de dos fondos —uno fijo al contenedor y
+   otro al contenido— que se anulan entre sí cuando no hay overflow. */
+@utility tabs-scroll-hint {
+  background:
+    linear-gradient(to right, var(--surface-app) 30%, transparent) left center,
+    linear-gradient(to left, var(--surface-app) 30%, transparent) right center,
+    radial-gradient(farthest-side at 0 50%, rgb(0 0 0 / 0.09), transparent) left
+      center,
+    radial-gradient(farthest-side at 100% 50%, rgb(0 0 0 / 0.09), transparent)
+      right center;
+  background-repeat: no-repeat;
+  background-size:
+    28px 100%,
+    28px 100%,
+    12px 100%,
+    12px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+
+.dark .tabs-scroll-hint {
+  background-image:
+    linear-gradient(to right, var(--surface-app) 30%, transparent),
+    linear-gradient(to left, var(--surface-app) 30%, transparent),
+    radial-gradient(farthest-side at 0 50%, rgb(0 0 0 / 0.45), transparent),
+    radial-gradient(farthest-side at 100% 50%, rgb(0 0 0 / 0.45), transparent);
+}
+
+/* Línea de datos separados por un punto medio (`MetaLine`). El punto lo
+   dibuja cada dato delante suyo; el que abre un renglón cae en el margen
+   negativo, fuera del recorte. Con `<span>·</span>` sueltos el punto quedaba
+   colgando al final o al principio de la línea cuando el texto envolvía. */
+.meta-line {
+  overflow-x: clip;
+}
+
+.meta-line-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 0.25rem;
+  margin-inline-start: -1.25rem;
+}
+
+.meta-line-items > * {
+  position: relative;
+  padding-inline-start: 1.25rem;
+}
+
+.meta-line-items > *::before {
+  content: "·";
+  /* Texto alternativo vacío donde el navegador lo admite: el punto es
+     decorativo y un lector de pantalla no tiene por qué leerlo. */
+  content: "·" / "";
+  position: absolute;
+  inset-inline-start: 0;
+  width: 1.25rem;
+  text-align: center;
+}
+
+/* Transición fluida de apertura para paneles desplegables y <details> */
+details[open] > *:not(summary) {
+  animation: details-expand 180ms ease-out;
+}
+
+summary {
+  cursor: pointer;
+  user-select: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+@keyframes details-expand {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Autofill del navegador respetando los tokens de superficie y color del tema */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ink-strong);
+  -webkit-box-shadow: 0 0 0 1000px var(--surface-card) inset;
+  box-shadow: 0 0 0 1000px var(--surface-card) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* =============================================================================
+   Accesibilidad Cívica: Dislexia, Movimiento Reducido y Foco Acentuado
+   ============================================================================= */
+html.civic-dyslexia,
+html.civic-dyslexia * {
+  letter-spacing: 0.035em !important;
+  word-spacing: 0.06em !important;
+  line-height: 1.65 !important;
+}
+
+/* `html` va también solo: `scroll-behavior: smooth` está declarado en la raíz
+   y `html.civic-reduced-motion *` sólo alcanza a sus descendientes, así que
+   los saltos a un ancla seguían animados con el interruptor encendido. */
+html.civic-reduced-motion,
+html.civic-reduced-motion *,
+html.civic-reduced-motion *::before,
+html.civic-reduced-motion *::after {
+  animation-duration: 0.001s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001s !important;
+  scroll-behavior: auto !important;
+}
+
+html.civic-enhanced-focus *:focus-visible {
+  outline: 3px solid var(--color-accent-500) !important;
+  outline-offset: 3px !important;
+}

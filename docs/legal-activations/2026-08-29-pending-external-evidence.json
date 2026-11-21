@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "agorbis.legal-activation.v1",
+  "status": "applied_verified",
+  "preparedAtUtc": "2026-08-29T22:42:58Z",
+  "preparedFromHead": "16021e68a48e385d53cfb191404b622b3aac59e0",
+  "preparedFromHeadRole": "base_head_before_this_activation_commit",
+  "decision": "D72",
+  "policyVersion": "D72/2026-08-29/v2",
+  "policyHash": "c5116a8f4450b2340f5fd30d4c74ce4badb8ee5782c5cb9b1bc2b87ffe937ebd",
+  "legalConclusion": "none",
+  "deploymentAuthorized": false,
+  "repositoryContentActivated": true,
+  "productionMigrationApplied": true,
+  "sourceDraft": {
+    "path": "docs/legal-drafts/2026-08-29-pending-external-evidence.json",
+    "sha256": "e6ec6aa8190c7cab7c46dc27f414a7553e051831146d747a3ce7d0aec8e4d9f6",
+    "status": "draft_not_active"
+  },
+  "preparedMigration": {
+    "id": "0060",
+    "path": "supabase/migrations/0060_activate_pending_external_evidence_legal_notices.sql",
+    "sha256": "e417c882b3c66ea1bd0a1fc66a69bc60f5f873c24bbdf094629ad82d54995914",
+    "applied": true,
+    "containsAcceptanceBackfill": false,
+    "appliesSensitiveConsent0059": false
+  },
+  "aaipDatabaseRegistration": {
+    "status": "pending",
+    "registrationId": "",
+    "evidenceStatus": "BLOCKED_EXTERNAL"
+  },
+  "externalEvidence": {
+    "providerLocationsVerified": false,
+    "providerRetentionVerified": false,
+    "transferSafeguardsVerified": false,
+    "retentionReconciled": false,
+    "productionBackupVerified": false,
+    "sensitiveConsent0059Applied": false
+  },
+  "requiredEmptyPublicVariables": [
+    "PUBLIC_CLOUDFLARE_PROCESSING_LOCATION",
+    "PUBLIC_CLOUDFLARE_PROCESSING_LOCATION_EN",
+    "PUBLIC_SUPABASE_PROCESSING_LOCATION",
+    "PUBLIC_SUPABASE_PROCESSING_LOCATION_EN",
+    "PUBLIC_RESEND_PROCESSING_LOCATION",
+    "PUBLIC_RESEND_PROCESSING_LOCATION_EN",
+    "PUBLIC_PROVIDER_RETENTION_SUMMARY",
+    "PUBLIC_PROVIDER_RETENTION_SUMMARY_EN",
+    "PUBLIC_TRANSFER_SAFEGUARDS",
+    "PUBLIC_TRANSFER_SAFEGUARDS_EN"
+  ],
+  "documents": [
+    {
+      "documentType": "privacy",
+      "previousVersion": "2026-08-25.1",
+      "previousContentSha256": "19826446051822fc347faaf114f1dc6f153b642c4e4706860e63bfb8373791af",
+      "preparedVersion": "2026-08-29.1",
+      "preparedContentSha256": "efdb395f293b7b1af31d6d79a2c70457a007279fe1d23a7b655dad4a997d039e"
+    },
+    {
+      "documentType": "international_transfer_notice",
+      "previousVersion": "2026-08-25.1",
+      "previousContentSha256": "64bf705727ca0003f76f3d422402f42bff97dc433f138dc432f9678fae1c505a",
+      "preparedVersion": "2026-08-29.1",
+      "preparedContentSha256": "052a72a73375da6930313cbc9f2736f8b63f0ad321342b9fdd66f727a34a1baa",
+      "contentHashAlgorithm": "sha256-json-stringify-v1",
+      "providerRegisterVersion": "2026-08-29.1"
+    }
+  ],
+  "warnings": [
+    "Repository preparation alone did not apply migration 0060; its later application was separately authorized and verified against the explicit production project. This record does not authorize deployment or another production mutation.",
+    "Pending or unverified evidence remains pending or unverified and is not converted to PASS by this activation record.",
+    "Sensitive-consent review 0059 remains omitted and in migration-drafts; Agorbis must not be described as legally compliant.",
+    "No provider location, country, retention period, contract, DPA, transfer safeguard, AAIP registration number, or backup verification is supplied by this record."
+  ]
+}

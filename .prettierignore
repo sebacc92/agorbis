@@ -1,0 +1,59 @@
+**/*.log
+**/.DS_Store
+*.
+.vscode/settings.json
+.history
+.yarn
+bazel-*
+bazel-bin
+bazel-out
+bazel-qwik
+bazel-testlogs
+dist
+dist-dev
+/lib
+/lib-types
+etc
+external
+node_modules
+temp
+tsc-out
+tsdoc-metadata.json
+target
+output
+rollup.config.js
+build
+.cache
+.vscode
+.rollup.cache
+tsconfig.tsbuildinfo
+worker-configuration.d.ts
+vite.config.ts
+*.spec.tsx
+*.spec.ts
+.netlify
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+server
+playwright-report
+test-results
+.vercel
+.wrangler
+
+# Tablas de datos geográficos escritas a mano, varias entradas por línea para
+# poder leerlas como lo que son: una tabla. Prettier pone una entrada por línea
+# y las 200 filas de países pasan a ocupar 800.
+scripts/gen-geo.mjs
+
+# Artefacto JSON canónico generado/validado por scripts/recovery-inventory.mjs.
+# Prettier refluye arrays y rompería deliberadamente su serialización v1.
+recovery/configuration-inventory.v1.json
+
+# rsc-harness: rsc genera y reescribe estos archivos en cada actualización;
+# formatearlos haría que dejara de reconocerlos como propios.
+.rsc.json
+.claude/rsc-bootstrap.mjs
+AGENTS.md
+01-TOOLS/
+02-DOCS/

@@ -1,0 +1,63 @@
+# Las rutas listadas acá exigen revisión explícita del responsable antes de
+# llegar a `main` (con la protección de rama que pide "Require review from Code
+# Owners"). Son las que sostienen el gate legal, la base, la seguridad del
+# Worker y el proceso de release: un cambio silencioso en cualquiera de ellas
+# puede romper una garantía que la app afirma tener.
+# GitHub aplica la última regla que coincide, así que las específicas van abajo.
+
+# Aparato legal versionado (versiones + hashes verificados por check-legal).
+/src/lib/legal*                         @sebacc92
+/src/lib/legal-content.ts               @sebacc92
+/src/routes/privacidad/                 @sebacc92
+/src/routes/terminos/                   @sebacc92
+/src/routes/subencargados/              @sebacc92
+/src/routes/transferencias-internacionales/ @sebacc92
+/src/routes/normas-comunitarias/        @sebacc92
+/src/routes/consentimiento/             @sebacc92
+# El gate que verifica versiones y hashes de esos textos.
+/scripts/check-legal.mjs                @sebacc92
+/scripts/check-pending-external-evidence-legal-draft.mjs @sebacc92
+
+# Esquema, RLS y borradores SQL.
+/supabase/migrations/                   @sebacc92
+/supabase/migration-drafts/             @sebacc92
+# Borradores fuera del ledger (0068 rechazado, 0069 en borrador).
+/supabase/sql-drafts/                   @sebacc92
+# Contrato código ↔ esquema (`.rpc()`/`.from()` contra los tipos y el ledger).
+/scripts/check-db-contract.mjs          @sebacc92
+/supabase/tests/                        @sebacc92
+
+# Cabeceras de seguridad (CSP, Permissions-Policy, HSTS).
+/src/routes/plugin@cabeceras.ts         @sebacc92
+# Fork del router del middleware (caché cruzada entre cuentas) y el parche de
+# build que sanea logs con URLs: los dos existen por bugs del beta de Qwik y
+# D75 y dependabot.yml piden revisarlos en cada actualización.
+/src/lib/qwik-cloudflare-worker-router.ts @sebacc92
+/adapters/cloudflare-workers/           @sebacc92
+
+# Tooling de release, D72, backups y pins.
+/scripts/*release*                      @sebacc92
+/scripts/exceptional-*                  @sebacc92
+/scripts/d72-*                          @sebacc92
+/scripts/run-*                          @sebacc92
+/scripts/cloudflare-*                   @sebacc92
+/scripts/production-*                   @sebacc92
+/scripts/*backup*                       @sebacc92
+/scripts/supabase-*                     @sebacc92
+/scripts/git-recovery*                  @sebacc92
+/scripts/installed-pnpm-store.mjs       @sebacc92
+/scripts/non-waivable-gate-evidence-catalog.mjs @sebacc92
+/scripts/test-exceptional-*             @sebacc92
+/scripts/test-d72-*                     @sebacc92
+/scripts/test-cloudflare-*              @sebacc92
+/scripts/test-preflight.mjs             @sebacc92
+# Decide qué advisories se pueden ignorar y hasta cuándo.
+/scripts/check-audit-ignores.mjs        @sebacc92
+/docs/PRODUCTION_RUNBOOK.md             @sebacc92
+/package.json                           @sebacc92
+/pnpm-lock.yaml                         @sebacc92
+/pnpm-workspace.yaml                    @sebacc92
+/wrangler*.jsonc                        @sebacc92
+
+# CI, plantillas y esta misma lista.
+/.github/                               @sebacc92

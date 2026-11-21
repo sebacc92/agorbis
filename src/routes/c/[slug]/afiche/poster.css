@@ -1,0 +1,20 @@
+@media print {
+  body:has(#community-poster) header,
+  body:has(#community-poster) footer,
+  body:has(#community-poster) nav {
+    display: none !important;
+  }
+
+  body:has(#community-poster) #contenido,
+  body:has(#community-poster) .container-content {
+    max-width: none;
+    padding: 0 !important;
+  }
+
+  body:has(#community-poster) #community-poster {
+    max-width: 186mm;
+    margin: 0 auto;
+    padding: 10mm;
+    break-inside: avoid;
+  }
+}

@@ -1,0 +1,158 @@
+project_id = "agorbis"
+
+[api]
+enabled = true
+port = 54821
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54822
+shadow_port = 54820
+major_version = 17
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql", "./migrations/0017_seba_editorial_content.sql"]
+
+[db.pooler]
+enabled = false
+
+[realtime]
+enabled = true
+
+[studio]
+enabled = true
+port = 54823
+api_url = "http://127.0.0.1"
+
+# Captura los mails de confirmación y los magic links en Mailpit.
+[local_smtp]
+enabled = true
+port = 54824
+
+[storage]
+enabled = true
+file_size_limit = "5MiB"
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = [
+  "http://localhost:5173/auth/callback",
+  "http://127.0.0.1:5173/auth/callback",
+  "http://localhost:4173/auth/callback",
+  "http://127.0.0.1:4173/auth/callback",
+  "http://localhost:5173/auth/confirm",
+  "http://127.0.0.1:5173/auth/confirm",
+  "http://localhost:4173/auth/confirm",
+  "http://127.0.0.1:4173/auth/confirm",
+]
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+enable_signup = true
+enable_anonymous_sign_ins = false
+minimum_password_length = 12
+# Paridad con Producción: letras y números, sin mayúsculas ni símbolos
+# obligatorios (D101).
+password_requirements = "letters_digits"
+
+[auth.rate_limit]
+# La suite E2E valida en una sola ejecución confirmaciones, recuperación y
+# notificaciones críticas. Este margen es exclusivo del stack local: Supabase
+# Cloud debe conservar el límite operativo restrictivo documentado (6/h).
+email_sent = 100
+sms_sent = 10
+anonymous_users = 5
+token_refresh = 120
+sign_in_sign_ups = 20
+token_verifications = 20
+
+# Widget B local: usa las claves dummy oficiales de Cloudflare. El navegador
+# nunca lo renderiza; sólo prueba que Auth público rechaza requests sin
+# captcha_token mientras los handlers de Agorbis entran con SECRET_KEY.
+[auth.captcha]
+enabled = true
+provider = "turnstile"
+secret = "1x0000000000000000000000000000000AA"
+
+[auth.mfa]
+# Agorbis permite un factor principal y otro de respaldo. La app no expone el
+# borrado de factores verificados; una recuperación exige validación humana.
+max_enrolled_factors = 2
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+# El entorno local replica la confirmación obligatoria de producción; Mailpit
+# permite probar el correo completo sin depender de un proveedor externo.
+enable_confirmations = true
+secure_password_change = true
+max_frequency = "30s"
+otp_length = 6
+otp_expiry = 3600
+
+[auth.email.template.confirmation]
+subject = "Agorbis · Confirmá tu correo / Confirm your email"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.recovery]
+subject = "Agorbis · Recuperá tu acceso / Recover your account"
+content_path = "./supabase/templates/recovery.html"
+
+[auth.email.template.magic_link]
+subject = "Agorbis · Enlace de acceso / Sign-in link"
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.reauthentication]
+subject = "Agorbis · Código de seguridad / Security code"
+content_path = "./supabase/templates/reauthentication.html"
+
+[auth.email.template.email_change]
+subject = "Agorbis · Confirmá tu nuevo correo / Confirm your new email"
+content_path = "./supabase/templates/email_change.html"
+
+[auth.email.notification.password_changed]
+enabled = true
+subject = "Agorbis · Contraseña actualizada / Password changed"
+content_path = "./supabase/templates/password_changed.html"
+
+[auth.email.notification.email_changed]
+enabled = true
+subject = "Agorbis · Correo actualizado / Email changed"
+content_path = "./supabase/templates/email_changed.html"
+
+[auth.email.notification.identity_linked]
+enabled = true
+subject = "Agorbis · Método de acceso vinculado / Sign-in method linked"
+content_path = "./supabase/templates/identity_linked.html"
+
+[auth.email.notification.identity_unlinked]
+enabled = true
+subject = "Agorbis · Método de acceso eliminado / Sign-in method removed"
+content_path = "./supabase/templates/identity_unlinked.html"
+
+[auth.email.notification.mfa_factor_enrolled]
+enabled = true
+subject = "Agorbis · Segundo factor agregado / Verification method added"
+content_path = "./supabase/templates/mfa_factor_enrolled.html"
+
+[auth.email.notification.mfa_factor_unenrolled]
+enabled = true
+subject = "Agorbis · Segundo factor eliminado / Verification method removed"
+content_path = "./supabase/templates/mfa_factor_unenrolled.html"
+
+[auth.external.google]
+enabled = false
+client_id = ""
+secret = ""
+skip_nonce_check = false
+
+[analytics]
+enabled = false

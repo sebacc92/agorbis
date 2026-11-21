@@ -1,0 +1,812 @@
+{
+  "authEmailTemplates": {
+    "captureStatus": "repository-source-and-operator-reported-dashboard-copy",
+    "dashboardRestoreMethod": "manual-exact-copy-and-reopen-compare",
+    "format": "agorbis-auth-email-template-inventory/v1",
+    "templates": [
+      {
+        "bytes": 1340,
+        "dashboardTemplate": "Confirm signup / Confirmación",
+        "file": "confirmation.html",
+        "sha256": "090003d0fd073d96af25cea9a0ca9147efe65ed10f97d1b167518ae443461573",
+        "subject": "Agorbis · Confirmá tu correo / Confirm your email",
+        "variables": [
+          "RedirectTo",
+          "TokenHash"
+        ]
+      },
+      {
+        "bytes": 2039,
+        "dashboardTemplate": "Change Email Address / Cambio de correo",
+        "file": "email_change.html",
+        "sha256": "36c1636355ea22aed5d124c0ad7524652803f250b1d2ec635341c82d8717ca4f",
+        "subject": "Agorbis · Confirmá tu nuevo correo / Confirm your new email",
+        "variables": [
+          "NewEmail",
+          "SiteURL",
+          "TokenHash"
+        ]
+      },
+      {
+        "bytes": 1690,
+        "dashboardTemplate": "Email changed / Correo actualizado",
+        "file": "email_changed.html",
+        "sha256": "af9300a380c08a7770feb2ba737f129cc49cb55cd66143f7c021db5f6fbf863c",
+        "subject": "Agorbis · Correo actualizado / Email changed",
+        "variables": [
+          "Email",
+          "OldEmail",
+          "SiteURL"
+        ]
+      },
+      {
+        "bytes": 1712,
+        "dashboardTemplate": "Identity linked / Método vinculado",
+        "file": "identity_linked.html",
+        "sha256": "6d4baeabb853eb5aee7d5fe662902afa9bebdf11775187d669ec8cfa4b702ec5",
+        "subject": "Agorbis · Método de acceso vinculado / Sign-in method linked",
+        "variables": [
+          "Provider",
+          "SiteURL"
+        ]
+      },
+      {
+        "bytes": 1654,
+        "dashboardTemplate": "Identity unlinked / Método eliminado",
+        "file": "identity_unlinked.html",
+        "sha256": "3c03289b1c70b055b786436aec9eea1fae5d409391b5f7a0592e41ad67b2c5ed",
+        "subject": "Agorbis · Método de acceso eliminado / Sign-in method removed",
+        "variables": [
+          "Provider",
+          "SiteURL"
+        ]
+      },
+      {
+        "bytes": 1384,
+        "dashboardTemplate": "Magic Link",
+        "file": "magic_link.html",
+        "sha256": "8fb83e43456fcd42c89044ae0ba205dc0cf93381db9467e5ae4a1aa88fafef98",
+        "subject": "Agorbis · Enlace de acceso / Sign-in link",
+        "variables": [
+          "RedirectTo",
+          "TokenHash"
+        ]
+      },
+      {
+        "bytes": 1086,
+        "dashboardTemplate": "MFA factor enrolled / Segundo factor agregado",
+        "file": "mfa_factor_enrolled.html",
+        "sha256": "4c99bfdc547a8e4507f989ed3937fef4a7fcd493ad3924e1b408e6262e5c3002",
+        "subject": "Agorbis · Segundo factor agregado / Verification method added",
+        "variables": []
+      },
+      {
+        "bytes": 1123,
+        "dashboardTemplate": "MFA factor unenrolled / Segundo factor eliminado",
+        "file": "mfa_factor_unenrolled.html",
+        "sha256": "5a0b6930fd453c7020b6c9b6096a0ae63554e29ed4016d4482d38f0310d7bce2",
+        "subject": "Agorbis · Segundo factor eliminado / Verification method removed",
+        "variables": []
+      },
+      {
+        "bytes": 1031,
+        "dashboardTemplate": "Password changed / Contraseña actualizada",
+        "file": "password_changed.html",
+        "sha256": "e3e01b10197cc2a615b7382caa46170d7c7c0922724f99e9046e97fc335422f6",
+        "subject": "Agorbis · Contraseña actualizada / Password changed",
+        "variables": []
+      },
+      {
+        "bytes": 1539,
+        "dashboardTemplate": "Reauthentication / Reautenticación",
+        "file": "reauthentication.html",
+        "sha256": "420a2c8842c4a95fa97ae422a029e1fdd30c86dbf3cbf59aca63c3ba4be5162c",
+        "subject": "Agorbis · Código de seguridad / Security code",
+        "variables": [
+          "Token"
+        ]
+      },
+      {
+        "bytes": 1338,
+        "dashboardTemplate": "Reset password / Recuperación",
+        "file": "recovery.html",
+        "sha256": "9ff61eef5007ba7593389ce33e597442af4f09f626d29e1d6edc39b71f78ce01",
+        "subject": "Agorbis · Recuperá tu acceso / Recover your account",
+        "variables": [
+          "RedirectTo",
+          "TokenHash"
+        ]
+      }
+    ]
+  },
+  "cloudflareDns": {
+    "captureStatus": "human-export-required",
+    "knownArchitecture": {
+      "applicationHttpProxyEnabled": true,
+      "mode": "authoritative-dns-and-workers-custom-domains",
+      "webRecordsProxied": true,
+      "zone": "agorbis.com"
+    },
+    "requiredExports": [
+      {
+        "fields": [
+          "zone-file"
+        ],
+        "format": "bind",
+        "path": "cloudflare-dns-zone.txt"
+      },
+      {
+        "fields": [
+          "content",
+          "name",
+          "proxied",
+          "ttl",
+          "type"
+        ],
+        "format": "redacted-json",
+        "path": "cloudflare-dns-records.redacted.json"
+      }
+    ],
+    "requiredRecordPurposes": [
+      "resend-dkim",
+      "resend-dmarc",
+      "resend-mx",
+      "resend-spf",
+      "cloudflare-worker-apex",
+      "cloudflare-worker-www"
+    ]
+  },
+  "cloudflareWorker": {
+    "accountId": "4d78fb10c1ae65281ec851479d5045dc",
+    "assets": {
+      "binding": "ASSETS",
+      "directory": "./dist",
+      "run_worker_first": true
+    },
+    "captureStatus": "repository-source-and-human-cloud-export-required",
+    "closedRecoveryVars": {
+      "AGORBIS_LAUNCH_MODE": "closed",
+      "AGORBIS_RUNTIME": "cloudflare-workers",
+      "PUBLIC_FACEBOOK_AUTH_ENABLED": "false",
+      "PUBLIC_GOOGLE_AUTH_ENABLED": "false",
+      "PUBLIC_SITE_URL": "https://agorbis.com",
+      "PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_G8zV_-e3-KIm7sWr6UdpaQ_dlmOED8s",
+      "PUBLIC_SUPABASE_URL": "https://ibtvlvpxwourrxwcrfkf.supabase.co",
+      "TURNSTILE_HOSTNAMES": "agorbis.com"
+    },
+    "compatibilityDate": "2026-08-25",
+    "compatibilityFlags": [
+      "nodejs_compat"
+    ],
+    "crons": [
+      "10 * * * *",
+      "5 0 * * *",
+      "25 0 * * *",
+      "20 3 * * *",
+      "40 3 * * *"
+    ],
+    "domains": [
+      "agorbis.com",
+      "www.agorbis.com"
+    ],
+    "environment": {
+      "categories": {
+        "authAttestations": [
+          "SUPABASE_AUTH_ANONYMOUS_SIGN_INS_ENABLED",
+          "SUPABASE_AUTH_CAPTCHA_ENABLED",
+          "SUPABASE_AUTH_CAPTCHA_PROVIDER",
+          "SUPABASE_AUTH_DOUBLE_CONFIRM_EMAIL_CHANGES_ENABLED",
+          "SUPABASE_AUTH_EMAIL_CONFIRMATIONS_ENABLED",
+          "SUPABASE_AUTH_EMAIL_RATE_LIMIT_PER_HOUR",
+          "SUPABASE_AUTH_IP_FORWARDING_ENABLED",
+          "SUPABASE_AUTH_LEAKED_PASSWORD_PROTECTION_ENABLED",
+          "SUPABASE_AUTH_MFA_MAX_ENROLLED_FACTORS",
+          "SUPABASE_AUTH_MFA_TOTP_ENROLL_ENABLED",
+          "SUPABASE_AUTH_MFA_TOTP_VERIFY_ENABLED",
+          "SUPABASE_AUTH_MIN_PASSWORD_LENGTH",
+          "SUPABASE_AUTH_PASSWORD_REQUIREMENTS",
+          "SUPABASE_AUTH_PHONE_AUTH_ENABLED",
+          "SUPABASE_AUTH_REDIRECT_URLS",
+          "SUPABASE_AUTH_REQUIRE_CURRENT_PASSWORD_ENABLED",
+          "SUPABASE_AUTH_SECURITY_NOTIFICATIONS_ENABLED",
+          "SUPABASE_AUTH_SIGNUPS_ENABLED",
+          "SUPABASE_AUTH_SITE_URL",
+          "SUPABASE_LEGACY_SERVICE_ROLE_DISABLED"
+        ],
+        "core": [
+          "CLOUDFLARE_WORKERS_PLAN",
+          "CLOUDFLARE_ZONE_DYNAMIC_CACHE_RULES_REVIEWED",
+          "CRON_SECRET",
+          "PUBLIC_FACEBOOK_AUTH_ENABLED",
+          "PUBLIC_GOOGLE_AUTH_ENABLED",
+          "PUBLIC_SITE_URL",
+          "PUBLIC_SUPABASE_ANON_KEY",
+          "PUBLIC_SUPABASE_URL",
+          "SUPABASE_PLAN",
+          "SUPABASE_SECRET_KEY"
+        ],
+        "identityAndTransfers": [
+          "AAIP_DATABASE_REGISTRATION_STATUS",
+          "PUBLIC_AAIP_CONTROLLER_ID",
+          "PUBLIC_AAIP_DATABASE_REGISTRATION_STATUS",
+          "PUBLIC_AAIP_DATABASE_REGISTRATION_ID",
+          "PUBLIC_CLOUDFLARE_PROCESSING_LOCATION",
+          "PUBLIC_CLOUDFLARE_PROCESSING_LOCATION_EN",
+          "PUBLIC_GOOGLE_PROCESSING_LOCATION",
+          "PUBLIC_GOOGLE_PROCESSING_LOCATION_EN",
+          "PUBLIC_LEGAL_CONTACT_EMAIL",
+          "PUBLIC_LEGAL_CONTROLLER_NAME",
+          "PUBLIC_PROVIDER_RETENTION_SUMMARY",
+          "PUBLIC_PROVIDER_RETENTION_SUMMARY_EN",
+          "PUBLIC_RESEND_PROCESSING_LOCATION",
+          "PUBLIC_RESEND_PROCESSING_LOCATION_EN",
+          "PUBLIC_SUPABASE_PROCESSING_LOCATION",
+          "PUBLIC_SUPABASE_PROCESSING_LOCATION_EN",
+          "PUBLIC_TRANSFER_SAFEGUARDS",
+          "PUBLIC_TRANSFER_SAFEGUARDS_EN",
+          "RETENTION_RECONCILIATION_STATUS",
+          "PRODUCTION_BACKUP_STATUS",
+          "GOOGLE_DRIVE_BACKUP_STATUS",
+          "SENSITIVE_PARTICIPATION_CONSENT_0059_STATUS"
+        ],
+        "turnstile": [
+          "PUBLIC_TURNSTILE_SITE_KEY",
+          "TURNSTILE_HOSTNAMES",
+          "TURNSTILE_SECRET",
+          "TURNSTILE_SUPABASE_GUARD_HOSTNAMES"
+        ]
+      },
+      "expectedNameCount": 56,
+      "forbiddenNamesWhileFeaturesDisabledOrOutOfScope": [
+        "OPENAI_API_KEY",
+        "OPENAI_SUMMARY_MODEL",
+        "PUBLIC_FACEBOOK_PROCESSING_LOCATION",
+        "PUBLIC_FACEBOOK_PROCESSING_LOCATION_EN",
+        "RESEND_API_KEY",
+        "SUPABASE_DB_PASSWORD",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "TURNSTILE_TESTING"
+      ],
+      "knownNonSecretValues": {
+        "AAIP_DATABASE_REGISTRATION_STATUS": "pending",
+        "CLOUDFLARE_WORKERS_PLAN": "paid",
+        "CLOUDFLARE_ZONE_DYNAMIC_CACHE_RULES_REVIEWED": "true",
+        "GOOGLE_DRIVE_BACKUP_STATUS": "inactive",
+        "PRODUCTION_BACKUP_STATUS": "not_verified",
+        "PUBLIC_AAIP_CONTROLLER_ID": "RL-2026-81658385-APN-DNPDP#AAIP",
+        "PUBLIC_AAIP_DATABASE_REGISTRATION_STATUS": "pending",
+        "PUBLIC_FACEBOOK_AUTH_ENABLED": "false",
+        "PUBLIC_GOOGLE_AUTH_ENABLED": "true",
+        "PUBLIC_GOOGLE_PROCESSING_LOCATION": "Infraestructura global de Google: según su Política de Privacidad, la información puede procesarse en servidores fuera del país de residencia de la persona usuaria.",
+        "PUBLIC_GOOGLE_PROCESSING_LOCATION_EN": "Google's global infrastructure: according to its Privacy Policy, information may be processed on servers outside the user's country of residence.",
+        "PUBLIC_LEGAL_CONTACT_EMAIL": "sebastiancardoso92@gmail.com",
+        "PUBLIC_LEGAL_CONTROLLER_NAME": "Sebastian Cardoso Castillo",
+        "PUBLIC_SITE_URL": "https://agorbis.com",
+        "PUBLIC_SUPABASE_URL": "https://ibtvlvpxwourrxwcrfkf.supabase.co",
+        "RETENTION_RECONCILIATION_STATUS": "unreconciled",
+        "SENSITIVE_PARTICIPATION_CONSENT_0059_STATUS": "draft_not_applied",
+        "SUPABASE_AUTH_ANONYMOUS_SIGN_INS_ENABLED": "false",
+        "SUPABASE_AUTH_CAPTCHA_ENABLED": "true",
+        "SUPABASE_AUTH_CAPTCHA_PROVIDER": "turnstile",
+        "SUPABASE_AUTH_DOUBLE_CONFIRM_EMAIL_CHANGES_ENABLED": "true",
+        "SUPABASE_AUTH_EMAIL_CONFIRMATIONS_ENABLED": "true",
+        "SUPABASE_AUTH_EMAIL_RATE_LIMIT_PER_HOUR": "6",
+        "SUPABASE_AUTH_IP_FORWARDING_ENABLED": "true",
+        "SUPABASE_AUTH_LEAKED_PASSWORD_PROTECTION_ENABLED": "false",
+        "SUPABASE_AUTH_MFA_MAX_ENROLLED_FACTORS": "2",
+        "SUPABASE_AUTH_MFA_TOTP_ENROLL_ENABLED": "true",
+        "SUPABASE_AUTH_MFA_TOTP_VERIFY_ENABLED": "true",
+        "SUPABASE_AUTH_MIN_PASSWORD_LENGTH": "12",
+        "SUPABASE_AUTH_PASSWORD_REQUIREMENTS": "letters_digits",
+        "SUPABASE_AUTH_PHONE_AUTH_ENABLED": "false",
+        "SUPABASE_AUTH_REDIRECT_URLS": "https://agorbis.com/auth/callback,https://agorbis.com/auth/confirm",
+        "SUPABASE_AUTH_REQUIRE_CURRENT_PASSWORD_ENABLED": "true",
+        "SUPABASE_AUTH_SECURITY_NOTIFICATIONS_ENABLED": "password_changed,email_changed,identity_linked,identity_unlinked,mfa_factor_enrolled,mfa_factor_unenrolled",
+        "SUPABASE_AUTH_SIGNUPS_ENABLED": "true",
+        "SUPABASE_AUTH_SITE_URL": "https://agorbis.com",
+        "SUPABASE_LEGACY_SERVICE_ROLE_DISABLED": "true",
+        "SUPABASE_PLAN": "free",
+        "TURNSTILE_HOSTNAMES": "agorbis.com",
+        "TURNSTILE_SUPABASE_GUARD_HOSTNAMES": "agorbis.com"
+      },
+      "scope": "production-open-target-not-cloud-attestation",
+      "valueRecovery": {
+        "externalSecretRegister": [
+          "CRON_SECRET",
+          "SUPABASE_SECRET_KEY",
+          "TURNSTILE_SECRET"
+        ],
+        "humanCaptureRequired": [
+          "PUBLIC_AAIP_DATABASE_REGISTRATION_ID",
+          "PUBLIC_CLOUDFLARE_PROCESSING_LOCATION",
+          "PUBLIC_CLOUDFLARE_PROCESSING_LOCATION_EN",
+          "PUBLIC_PROVIDER_RETENTION_SUMMARY",
+          "PUBLIC_PROVIDER_RETENTION_SUMMARY_EN",
+          "PUBLIC_RESEND_PROCESSING_LOCATION",
+          "PUBLIC_RESEND_PROCESSING_LOCATION_EN",
+          "PUBLIC_SUPABASE_PROCESSING_LOCATION",
+          "PUBLIC_SUPABASE_PROCESSING_LOCATION_EN",
+          "PUBLIC_TRANSFER_SAFEGUARDS",
+          "PUBLIC_TRANSFER_SAFEGUARDS_EN",
+          "PUBLIC_TURNSTILE_SITE_KEY"
+        ],
+        "reissueFromProvider": [
+          "PUBLIC_SUPABASE_ANON_KEY"
+        ]
+      }
+    },
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": false
+    },
+    "main": "dist/_worker.js",
+    "name": "agorbis",
+    "nodeVersion": "22.x",
+    "previewUrls": false,
+    "routes": [
+      {
+        "custom_domain": true,
+        "pattern": "agorbis.com"
+      },
+      {
+        "custom_domain": true,
+        "pattern": "www.agorbis.com"
+      }
+    ],
+    "secretsRequired": [
+      "CRON_SECRET",
+      "SUPABASE_SECRET_KEY",
+      "TURNSTILE_SECRET"
+    ],
+    "traces": {
+      "enabled": false
+    },
+    "vars": {
+      "AGORBIS_LAUNCH_MODE": "open",
+      "AGORBIS_RUNTIME": "cloudflare-workers",
+      "PUBLIC_FACEBOOK_AUTH_ENABLED": "false",
+      "PUBLIC_GOOGLE_AUTH_ENABLED": "true",
+      "PUBLIC_SITE_URL": "https://agorbis.com",
+      "PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_G8zV_-e3-KIm7sWr6UdpaQ_dlmOED8s",
+      "PUBLIC_SUPABASE_URL": "https://ibtvlvpxwourrxwcrfkf.supabase.co",
+      "TURNSTILE_HOSTNAMES": "agorbis.com"
+    },
+    "workersDev": false
+  },
+  "format": "agorbis-recovery-configuration/v1",
+  "humanInputsRequired": [
+    {
+      "id": "aaip_database_registration",
+      "reason": "El Paso 2 fue presentado, pero el expediente EX no es aprobación ni número de registro de la base.",
+      "requiredEvidence": [
+        "Constancia aprobada del Paso 2 y número de registro asignado a la base por AAIP"
+      ],
+      "sensitivity": "public-after-issuance"
+    },
+    {
+      "id": "account_mfa_recovery_custody",
+      "reason": "Los códigos de recuperación de las cuentas proveedoras deben existir fuera del repositorio y comprobarse manualmente.",
+      "requiredEvidence": [
+        "Custodia cifrada y fecha de prueba para Supabase, Cloudflare, Resend, GitHub y Google"
+      ],
+      "sensitivity": "secret-external-only"
+    },
+    {
+      "id": "backup_key_and_media_custody",
+      "reason": "Google Drive fue elegido como destino manual del primer paquete productivo cifrado, pero todavía no fue configurado, subido, descargado ni verificado; la credencial de descifrado debe permanecer en custodia independiente.",
+      "requiredEvidence": [
+        "Paquete cifrado y checksum SHA-256 subidos manualmente a Google Drive, sin manifiesto detallado ni credencial de descifrado fuera del ciphertext",
+        "Descarga posterior a un directorio local distinto, checksum coincidente, descifrado válido y restore completo acreditado"
+      ],
+      "sensitivity": "secret-external-only"
+    },
+    {
+      "id": "cloudflare_dns_exports",
+      "reason": "El repositorio conoce la arquitectura DNS + Workers proyectada, pero no los contenidos, TTL y metadatos actuales de todos los registros.",
+      "requiredEvidence": [
+        "Export BIND de la zona",
+        "JSON redacted con type, name, content, TTL y proxied"
+      ],
+      "sensitivity": "operational-redacted"
+    },
+    {
+      "id": "provider_contractual_transfer_evidence",
+      "reason": "Destinos, retenciones y salvaguardas no pueden recuperarse de textos provisionales ni inferirse de un DPA genérico; Google Drive fue seleccionado para backups cifrados pero todavía no está aprobado ni operativo.",
+      "requiredEvidence": [
+        "Instrumentos y respuestas finales de Supabase, Resend y Cloudflare",
+        "Producto, entidad, rol, contrato o DPA, países, subencargados, retención, borrado, versionado, papelera y logs aplicables a Google Drive",
+        "Textos ES/EN y tratamiento AAIP aprobados para destinos, retención y salvaguardas"
+      ],
+      "sensitivity": "legal-restricted"
+    },
+    {
+      "id": "release_commit_and_artifact",
+      "reason": "El commit y el artefacto exactos sólo existen cuando se cierre el release candidate.",
+      "requiredEvidence": [
+        "Commit de release, hash del artefacto Edge y resultado del preflight"
+      ],
+      "sensitivity": "operational-redacted"
+    },
+    {
+      "id": "resend_domain_and_smtp_export",
+      "reason": "Los valores conocidos fueron atestados por el operador, pero falta una transcripción/export revisada del estado recuperable.",
+      "requiredEvidence": [
+        "Estado del dominio, SMTP, sender y tracking sin API key",
+        "Registros SPF, DKIM, MX y DMARC incluidos en el export DNS"
+      ],
+      "sensitivity": "operational-redacted"
+    },
+    {
+      "id": "secret_custody_metadata",
+      "reason": "El repositorio sólo puede conservar nombres, consumidores y acciones; faltan fingerprints, fechas y ubicaciones de escrow.",
+      "requiredEvidence": [
+        "Registro redacted con fingerprint, última rotación/verificación y ubicación cifrada de cada secreto activo"
+      ],
+      "sensitivity": "secret-metadata-restricted"
+    },
+    {
+      "id": "supabase_auth_dashboard_export",
+      "reason": "La configuración fue atestada, pero Supabase Dashboard sigue siendo la fuente operativa de Producción.",
+      "requiredEvidence": [
+        "Export o transcripción redacted campo por campo de Auth, CAPTCHA, MFA y límites"
+      ],
+      "sensitivity": "operational-redacted"
+    },
+    {
+      "id": "turnstile_widget_a_metadata",
+      "reason": "Faltan el nombre cloud, modo, identificador público/fingerprint y metadatos de rotación del widget visible.",
+      "requiredEvidence": [
+        "Export redacted del widget A y referencia al secret custodiado fuera del repositorio"
+      ],
+      "sensitivity": "secret-metadata-restricted"
+    },
+    {
+      "id": "turnstile_widget_b_metadata",
+      "reason": "Faltan el nombre cloud, modo, identificador público/fingerprint y metadatos de rotación del guard de Supabase.",
+      "requiredEvidence": [
+        "Export redacted del widget B y referencia al secret custodiado sólo para Supabase Auth"
+      ],
+      "sensitivity": "secret-metadata-restricted"
+    },
+    {
+      "id": "cloudflare_worker_redacted_export",
+      "reason": "La configuración versionada define bindings, routes y triggers, pero falta la captura redacted del estado efectivo del Worker.",
+      "requiredEvidence": [
+        "Export de bindings, custom domains, triggers y nombres de secretos; sólo fingerprints para secretos"
+      ],
+      "sensitivity": "secret-metadata-restricted"
+    }
+  ],
+  "policy": {
+    "cloudStateQueried": false,
+    "containsCredentialFingerprints": false,
+    "containsSecretValues": false,
+    "readiness": "incomplete-human-capture-required",
+    "scope": "production-configuration-redacted"
+  },
+  "secretRegister": {
+    "entries": [
+      {
+        "consumer": "runner offline de cifrado y restore",
+        "environment": "operator",
+        "id": "backup_decryption_credential",
+        "issuer": "mecanismo de cifrado elegido por el operador",
+        "metadataCaptureStatus": "human-input-required",
+        "owner": "Sebastian Cardoso Castillo",
+        "recoveryAction": "recuperar desde custodia independiente y probar descifrado; si se pierde, el paquete cifrado no es recuperable",
+        "requiredMetadata": [
+          "custodyLocation",
+          "encryptionMethod",
+          "lastVerifiedAt"
+        ],
+        "valuePolicy": "independent-secret-custody-only"
+      },
+      {
+        "consumer": "Cloudflare Worker fetch/scheduled",
+        "environment": "production",
+        "id": "cron_secret",
+        "issuer": "Agorbis",
+        "metadataCaptureStatus": "human-input-required",
+        "owner": "Sebastian Cardoso Castillo",
+        "recoveryAction": "generar 32 o más bytes, cargar como Worker Secret y probar rechazo 401 y dispatch scheduled interno autorizado",
+        "requiredMetadata": [
+          "escrowLocation",
+          "fingerprint",
+          "lastRotatedAt"
+        ],
+        "valuePolicy": "external-encrypted-vault-only"
+      },
+      {
+        "consumer": "apertura del gestor cifrado elegido",
+        "environment": "operator",
+        "id": "secret_store_unlock_credential",
+        "issuer": "Sebastian Cardoso Castillo",
+        "metadataCaptureStatus": "human-input-required",
+        "owner": "Sebastian Cardoso Castillo",
+        "recoveryAction": "usar el procedimiento de custodia independiente; nunca conservarla junto al almacén cifrado ni versionar su valor",
+        "requiredMetadata": [
+          "lastVerifiedAt",
+          "separateCustodyProcedure"
+        ],
+        "valuePolicy": "separate-custody-only"
+      },
+      {
+        "consumer": "acceso de emergencia a Supabase, Cloudflare, Resend, GitHub y Google",
+        "environment": "operator",
+        "id": "provider_account_mfa_recovery",
+        "issuer": "proveedores de cuenta",
+        "metadataCaptureStatus": "human-input-required",
+        "owner": "Sebastian Cardoso Castillo",
+        "recoveryAction": "recuperar desde el gestor cifrado, regenerar después de cada uso y reemplazar la custodia vigente",
+        "requiredMetadata": [
+          "escrowLocation",
+          "lastVerifiedAt"
+        ],
+        "valuePolicy": "external-encrypted-vault-only-no-versioned-fingerprint"
+      },
+      {
+        "consumer": "Supabase Auth SMTP",
+        "environment": "production",
+        "id": "resend_api_key_smtp",
+        "issuer": "Resend",
+        "metadataCaptureStatus": "human-input-required",
+        "owner": "Sebastian Cardoso Castillo",
+        "recoveryAction": "emitir una key nueva, actualizar SMTP, probar entrega y revocar la anterior",
+        "requiredMetadata": [
+          "escrowLocation",
+          "fingerprint",
+          "lastRotatedAt"
+        ],
+        "valuePolicy": "external-encrypted-vault-only"
+      },
+      {
+        "consumer": "conexión administrativa de backup y recuperación",
+        "environment": "production",
+        "id": "supabase_db_password",
+        "issuer": "Supabase",
+        "metadataCaptureStatus": "human-input-required",
+        "owner": "Sebastian Cardoso Castillo",
+        "recoveryAction": "resetear en Dashboard y actualizar únicamente el almacén cifrado",
+        "requiredMetadata": [
+          "escrowLocation",
+          "fingerprint",
+          "lastRotatedAt"
+        ],
+        "valuePolicy": "external-encrypted-vault-only"
+      },
+      {
+        "consumer": "Cloudflare Worker server-only",
+        "environment": "production",
+        "id": "supabase_secret_key",
+        "issuer": "Supabase",
+        "metadataCaptureStatus": "human-input-required",
+        "owner": "Sebastian Cardoso Castillo",
+        "recoveryAction": "emitir una nueva sb_secret dedicada, cargarla y revocar la anterior después del smoke test",
+        "requiredMetadata": [
+          "escrowLocation",
+          "fingerprint",
+          "lastRotatedAt"
+        ],
+        "valuePolicy": "external-encrypted-vault-only"
+      },
+      {
+        "consumer": "Cloudflare Worker Siteverify",
+        "environment": "production",
+        "id": "turnstile_secret_a",
+        "issuer": "Cloudflare",
+        "metadataCaptureStatus": "human-input-required",
+        "owner": "Sebastian Cardoso Castillo",
+        "recoveryAction": "rotar en Cloudflare y actualizar únicamente TURNSTILE_SECRET",
+        "requiredMetadata": [
+          "escrowLocation",
+          "fingerprint",
+          "lastRotatedAt"
+        ],
+        "valuePolicy": "external-encrypted-vault-only"
+      },
+      {
+        "consumer": "Supabase Auth Bot and Abuse Protection",
+        "environment": "production",
+        "id": "turnstile_secret_b",
+        "issuer": "Cloudflare",
+        "metadataCaptureStatus": "human-input-required",
+        "owner": "Sebastian Cardoso Castillo",
+        "recoveryAction": "rotar en Cloudflare y actualizar únicamente Supabase Auth",
+        "requiredMetadata": [
+          "escrowLocation",
+          "fingerprint",
+          "lastRotatedAt"
+        ],
+        "valuePolicy": "external-encrypted-vault-only"
+      }
+    ],
+    "externalProviderCredentials": [
+      {
+        "id": "google_oauth_client_secret",
+        "metadataCaptureStatus": "human-input-required",
+        "recoveryAction": "recuperar credenciales sólo en Supabase tras verificar custodia y callbacks; reconciliar el proveedor observado activo con el bloqueo de apertura de la aplicación por destinos, consentimiento y pruebas",
+        "status": "provider-observed-enabled-credential-custody-unverified",
+        "valuePolicy": "supabase-only-external-encrypted-vault-no-worker-secret"
+      }
+    ],
+    "format": "agorbis-secret-register-redacted/v1",
+    "inactiveOrRevoked": [
+      {
+        "id": "legacy_anon_key",
+        "recoveryAction": "no restaurar; emitir o recuperar únicamente una publishable key moderna",
+        "status": "disabled"
+      },
+      {
+        "id": "legacy_jwt_secret",
+        "recoveryAction": "no restaurar ni reutilizar",
+        "status": "revoked"
+      },
+      {
+        "id": "legacy_service_role_key",
+        "recoveryAction": "no restaurar; emitir una secret key moderna dedicada server-only",
+        "status": "disabled"
+      },
+      {
+        "id": "openai_api_key",
+        "recoveryAction": "no restaurar; crear sólo si el proveedor y la función se aprueban y documentan",
+        "status": "not-configured-feature-disabled"
+      }
+    ],
+    "valuePolicy": "values-and-recovery-codes-excluded-use-independent-encrypted-secret-store"
+  },
+  "sourceArtifacts": {
+    "supabaseConfig": {
+      "path": "supabase/config.toml",
+      "sha256": "55bb317952ad553ed4cbafd7ac4c8a980613b7a995125ed8f3f216af2d0c74f6"
+    },
+    "wranglerClosedConfiguration": {
+      "path": "wrangler.closed.jsonc",
+      "sha256": "5af9345dc2bc1f59524dcd0106f2f9aa6e06cd24c84f199508130e5e69f55fdc"
+    },
+    "wranglerConfiguration": {
+      "path": "wrangler.jsonc",
+      "sha256": "82ae6f380a58b9e6f3802f88efba8c222ab9b9966d0ed8f650aa523b0588ca4c"
+    },
+    "wranglerCronsClosedConfiguration": {
+      "path": "wrangler.crons-closed.jsonc",
+      "sha256": "1c87a5702c6fff6ff13486dcd461d0ca5fda17aeb9c9215d68a7790343a541e7"
+    },
+    "wranglerCronsOpenConfiguration": {
+      "path": "wrangler.crons-open.jsonc",
+      "sha256": "632019d4a7ccf9af4870a1432e6380dc83df435b538f70f586226d4b07475dd9"
+    },
+    "wranglerOpenRecoveryConfiguration": {
+      "path": "wrangler.open-recovery.jsonc",
+      "sha256": "63216d4ac117d271a22a7b4aeb7adb5ee750a3288e024f91a62c6c34ef236c7b"
+    },
+    "wranglerTrafficConfiguration": {
+      "path": "wrangler.traffic.jsonc",
+      "sha256": "3d0589e5c78a68b8fab9a7902296e4966ef747d921d64ff31bd3f72b1940567a"
+    }
+  },
+  "supabaseAuth": {
+    "captureStatus": "operator-reported-not-dashboard-exported",
+    "oauthObservation": {
+      "agentActivatedProviders": false,
+      "date": "2026-10-25",
+      "initialReportedState": {
+        "facebook": false,
+        "google": false
+      },
+      "observedPublicSettings": {
+        "disableSignup": false,
+        "email": true,
+        "facebook": false,
+        "google": false
+      },
+      "operatorConfirmedState": {
+        "facebook": false,
+        "google": false
+      },
+      "reconciliationStatus": "email-only-launch-google-deferred-d97",
+      "scope": "provider-switches-only-not-credential-or-consent-validation",
+      "source": "read-only-get-supabase-auth-v1-settings"
+    },
+    "project": {
+      "environment": "production",
+      "projectRef": "ibtvlvpxwourrxwcrfkf",
+      "region": "us-east-2"
+    },
+    "settings": {
+      "anonymousSignInsEnabled": false,
+      "captcha": {
+        "credentialReference": "turnstile_secret_b",
+        "enabled": true,
+        "provider": "turnstile"
+      },
+      "emailConfirmationsEnabled": true,
+      "emailRateLimitPerHour": 6,
+      "emailSignupsEnabled": true,
+      "ipAddressForwardingEnabled": true,
+      "leakedPasswordProtectionEnabled": false,
+      "legacyApiKeysEnabled": false,
+      "legacyJwtSecretRevoked": true,
+      "mfa": {
+        "maxEnrolledFactors": 2,
+        "totpEnrollmentEnabled": true,
+        "totpVerificationEnabled": true
+      },
+      "password": {
+        "minimumLength": 12,
+        "requirements": [
+          "digits",
+          "lowercase",
+          "symbols",
+          "uppercase"
+        ]
+      },
+      "phoneAuthEnabled": false,
+      "redirectUrls": [
+        "https://agorbis.com/auth/callback",
+        "https://agorbis.com/auth/confirm"
+      ],
+      "requireCurrentPasswordWhenUpdating": true,
+      "secureEmailChangeDoubleConfirmationEnabled": true,
+      "securityNotifications": [
+        "email_changed",
+        "identity_linked",
+        "identity_unlinked",
+        "mfa_factor_enrolled",
+        "mfa_factor_unenrolled",
+        "password_changed"
+      ],
+      "signupsEnabled": true,
+      "siteUrl": "https://agorbis.com"
+    }
+  },
+  "supabaseSmtp": {
+    "captureStatus": "operator-reported-not-dashboard-exported",
+    "credentialReference": "resend_api_key_smtp",
+    "domain": {
+      "name": "agorbis.com",
+      "verificationStatus": "operator-reported-verified"
+    },
+    "host": "smtp.resend.com",
+    "port": 465,
+    "provider": "Resend",
+    "senderEmail": "no-reply@agorbis.com",
+    "senderName": "Agorbis",
+    "tracking": {
+      "clickEnabled": false,
+      "openEnabled": false
+    },
+    "username": "resend"
+  },
+  "turnstile": {
+    "architecture": {
+      "legitimateFlow": "Agorbis validates A through Siteverify then calls Auth with SUPABASE_SECRET_KEY; it never generates or forwards a B token",
+      "widgetBPurpose": "reject direct public Supabase Auth calls that omit captchaToken"
+    },
+    "captureStatus": "partial-human-export-required",
+    "widgets": [
+      {
+        "cloudMetadataStatus": "human-input-required",
+        "credentialReference": "turnstile_secret_a",
+        "hostnames": [
+          "agorbis.com"
+        ],
+        "id": "A",
+        "publicSiteKeyEnvironmentName": "PUBLIC_TURNSTILE_SITE_KEY",
+        "secretConsumer": "Cloudflare Worker Siteverify",
+        "visibleToUser": true
+      },
+      {
+        "cloudMetadataStatus": "human-input-required",
+        "credentialReference": "turnstile_secret_b",
+        "hostnames": [
+          "agorbis.com"
+        ],
+        "id": "B",
+        "publicSiteKeyDistribution": "excluded-from-repository-app-and-cloudflare-worker",
+        "secretConsumer": "Supabase Auth Bot and Abuse Protection",
+        "visibleToUser": false
+      }
+    ]
+  }
+}

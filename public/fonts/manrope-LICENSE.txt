@@ -1,0 +1,7 @@
+Manrope — Copyright 2018 The Manrope Project Authors (https://github.com/sharanda/manrope)
+
+Licensed under the SIL Open Font License, Version 1.1 (OFL-1.1).
+Full text: https://openfontlicense.org/open-font-license-official-text/
+
+Agorbis sirve el subconjunto latino de la variable (500–800) desde este
+dominio, sin terceros (D76, D123). El archivo no se modificó.

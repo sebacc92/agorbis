@@ -1,0 +1,5 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "agorbis",
+  "account_id": "4d78fb10c1ae65281ec851479d5045dc",
+}

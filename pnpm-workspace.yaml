@@ -1,0 +1,115 @@
+# El package.json de server/ es un artefacto de build, no otro proyecto.
+# Fijar el único miembro también al verificar dependencias antes de run/exec.
+packages:
+  - "."
+
+# Un store frío y uno cacheado deben materializar la misma closure excepcional.
+# Restaurar side-effects omite shims generados por postinstall y cambia la Merkle.
+sideEffectsCache: false
+
+# Advisories ignorados por `pnpm audit`. Cada uno es dev-only: llega por el
+# test runner, el dev server, el CLI de Wrangler o el build, y ninguno entra al
+# bundle del navegador ni al Worker. Formato: paquete · ruta · por qué no llega
+# a runtime · fecha límite de revisión. CI corre `--audit-level=high` bloqueante
+# en `verificar` y `--audit-level=low` semanal no bloqueante; al vencer la fecha
+# o al actualizar la dependencia, borrar la entrada y volver a auditar.
+# GHSA-x586-xvc8-g7q6 (@qwik.dev/core "<2.0.0-beta37") entra como excepción
+# del responsable (D100): el rango publicado no tiene punto antes de 37 y
+# semver ordena "beta" < "beta37", así que marca 2.0.0-beta.40. Las
+# excepciones de paquetes de runtime nombran sus versiones exactas y
+# `check-audit-ignores` las invalida si el árbol cambia.
+# pnpm 11 lee `audit.ignore`; `auditConfig.ignoreGhsas` se mantiene igual para
+# versiones que todavía leen la clave anterior.
+auditConfig:
+  ignoreGhsas:
+    # Existentes desde 946718b (2026-09-11), con el motivo que faltaba registrar.
+    # vitest/@vitest/mocker · .>vitest · sólo corre los specs locales, no se empaqueta · arreglo en vitest 4 (major) · revisar antes de 2026-12-19
+    - GHSA-82fw-gwwq-j7x9
+    # Agregadas el 2026-10-20 (auditoría top 10, ítem 3).
+    # tinypool · .>vitest>tinypool · pool de workers del test runner local, sin opciones de terceros · arreglo sólo en vitest 4 (major) · revisar antes de 2026-12-19
+    - GHSA-5gmw-xhrv-c9v3
+    # tinypool · .>vitest>tinypool · ídem · revisar antes de 2026-12-19
+    - GHSA-85c8-ppgw-ccpr
+    # @vitest/mocker · .>vitest>@vitest/mocker · registro de mocks manuales del runner local, sin entrada de terceros · arreglo en vitest 4 (major) · revisar antes de 2026-12-19
+    - GHSA-qxg6-89mg-rqv8
+    # @qwik.dev/core@2.0.0-beta.40 · .>@qwik.dev/core · excepción del responsable (D100): el rango publicado es <2.0.0-beta37 sin punto y semver ordena beta.40 como anterior; upstream marca beta37 como primera versión corregida y beta.40 no contiene el camino de código señalado (ResourceSerializer.$fill$) · revisar antes de 2026-12-19
+    - GHSA-x586-xvc8-g7q6
+    # zod@3.25.76,4.6.7 · .>@qwik.dev/router>zod · excepción del responsable (D100): la copia 3.25.76 del router no tiene arreglo en 3.x y forzarla a 4.x rompe zod$ en beta.40; las tres acciones con arrays cuentan los valores antes de Zod (collectionLimits) y el Worker limita el cuerpo a 5 MB · revisar antes de 2026-12-19
+    - GHSA-mrhx-c7xc-m3w5
+
+audit:
+  ignore:
+    # Existentes desde 946718b (2026-09-11), con el motivo que faltaba registrar.
+    # vitest/@vitest/mocker · .>vitest · sólo corre los specs locales, no se empaqueta · arreglo en vitest 4 (major) · revisar antes de 2026-12-19
+    - GHSA-82fw-gwwq-j7x9
+    # Agregadas el 2026-10-20 (auditoría top 10, ítem 3).
+    # tinypool · .>vitest>tinypool · pool de workers del test runner local, sin opciones de terceros · arreglo sólo en vitest 4 (major) · revisar antes de 2026-12-19
+    - GHSA-5gmw-xhrv-c9v3
+    # tinypool · .>vitest>tinypool · ídem · revisar antes de 2026-12-19
+    - GHSA-85c8-ppgw-ccpr
+    # @vitest/mocker · .>vitest>@vitest/mocker · registro de mocks manuales del runner local, sin entrada de terceros · arreglo en vitest 4 (major) · revisar antes de 2026-12-19
+    - GHSA-qxg6-89mg-rqv8
+    # @qwik.dev/core@2.0.0-beta.40 · .>@qwik.dev/core · excepción del responsable (D100): el rango publicado es <2.0.0-beta37 sin punto y semver ordena beta.40 como anterior; upstream marca beta37 como primera versión corregida y beta.40 no contiene el camino de código señalado (ResourceSerializer.$fill$) · revisar antes de 2026-12-19
+    - GHSA-x586-xvc8-g7q6
+    # zod@3.25.76,4.6.7 · .>@qwik.dev/router>zod · excepción del responsable (D100): la copia 3.25.76 del router no tiene arreglo en 3.x y forzarla a 4.x rompe zod$ en beta.40; las tres acciones con arrays cuentan los valores antes de Zod (collectionLimits) y el Worker limita el cuerpo a 5 MB · revisar antes de 2026-12-19
+    - GHSA-mrhx-c7xc-m3w5
+
+allowBuilds:
+  # No está en el lock actual; si reaparece, no compila código nativo sin una
+  # revisión nueva y explícita.
+  deasync: false
+  esbuild: true
+  sharp: true
+  # Wrangler usa el postinstall oficial sólo para seleccionar y verificar el
+  # binario workerd de la plataforma ya fijado en el lockfile.
+  workerd: true
+
+# Cuarentena de publicaciones: pnpm no resuelve versiones con menos de 7 días
+# (10080 minutos) en el registry y, con la clave explícita, pnpm 11 activa
+# `minimumReleaseAgeStrict` y vuelve a verificar cada entrada del lockfile
+# contra la misma regla. El default de pnpm 11 es 1 día; 7 días da margen para
+# que se despubliquen paquetes comprometidos antes de que lleguen al lockfile.
+# Dependabot usa el mismo `cooldown`. La lista de excepciones que había (workerd,
+# workers-types, miniflare y wrangler del 25-08-2026) se borró el 2026-10-21:
+# esas versiones ya superan los 7 días. Una excepción nueva lleva versión
+# exacta, motivo y fecha de retiro.
+minimumReleaseAge: 10080
+
+overrides:
+  "@azure/functions>uuid": "11.1.1"
+  # Se fuerzan versiones corregidas y CI ejecuta
+  # `pnpm audit --audit-level=low`; retirar cada override sólo cuando el árbol
+  # de dependencias publicado ya quede limpio sin él.
+  "@tootallnate/once@<2.0.1": "2.0.1"
+  "ajv@>=7.0.0 <8.18.0": "8.20.0"
+  "esbuild@>=0.27.3 <0.28.1": "0.28.1"
+  "js-yaml@>=4.0.0 <4.3.1": "4.3.1"
+  "minimatch@>=10.0.0 <10.2.6": "10.2.6"
+  "nanoid@<3.3.18": "3.3.18"
+  "path-to-regexp@>=8.0.0 <8.4.0": "8.4.0"
+  "path-to-regexp@>=4.0.0 <6.3.0": "6.3.0"
+  # vite-imagetools pide un sharp anterior a 0.35 (GHSA-rgj7-g3m4-5g8c y
+  # GHSA-wq5f-xc86-pv6w se arreglan en 0.35.5). El directo y el de miniflare ya
+  # resuelven 0.35.5 por sí solos desde wrangler 4.160.1.
+  "sharp@<0.35.0": "0.35.5"
+  "smol-toml@<1.6.1": "1.6.1"
+  "tar@>=7.0.0 <=7.5.20": "7.5.21"
+  "undici@<6.28.0": "6.28.0"
+  # @qwik.dev/core pide launch-editor ^2.14.1 (GHSA-587h-7wmj-h5pm); sólo el
+  # "abrir en el editor" del dev server, pero el audit alto lo bloqueaba.
+  "launch-editor@<2.14.2": "2.14.2"
+  # Parches dentro de la misma versión mayor que cierran excepciones de
+  # `pnpm audit` (19-11-2026). Todos son de build, lint o dev server; retirar
+  # cada uno cuando el paquete padre ya pida la versión corregida.
+  "brace-expansion@<1.1.21": "1.1.21"
+  "brace-expansion@>=4.0.0 <5.0.12": "5.0.12"
+  "shell-quote@>=1.8.4 <1.11.0": "1.11.0"
+  "source-map-js@>=1.0.0 <1.2.2": "1.2.2"
+  "svgo@>=3.0.0 <3.3.5": "3.3.5"
+  "svgo@>=4.0.0 <4.1.0": "4.1.0"
+  "@vitest/mocker@3.2.7>vite": "7.3.7"
+  "vite-node@3.2.4>vite": "7.3.7"
+  "vitest@3.2.7>vite": "7.3.7"
+
+patchedDependencies:
+  "@qwik.dev/router@2.0.0-beta.40": patches/@qwik.dev__router@2.0.0-beta.40.patch

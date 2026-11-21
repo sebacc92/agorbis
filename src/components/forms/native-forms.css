@@ -1,0 +1,74 @@
+/* El fallback queda en HTML también con Qwik: noscript sólo admite texto
+   en su renderer y no puede envolver los botones de edición. */
+[data-without-script] {
+  display: none;
+}
+
+/* Sin scripts, los formularios conservan todos sus campos y envío nativo;
+   sólo se retiran los controles que dependen del estado del navegador. */
+@media (scripting: none) {
+  [data-without-script] {
+    display: block;
+  }
+
+  [data-native-form-step] {
+    display: block;
+  }
+
+  [data-requires-script] {
+    display: none;
+  }
+
+  [data-native-form] input[type="radio"] {
+    position: static;
+    width: 1rem;
+    height: 1rem;
+    margin-inline-end: 0.5rem;
+    overflow: visible;
+    clip: auto;
+    clip-path: none;
+    white-space: normal;
+  }
+
+  [data-native-form] .choice-control {
+    border-color: var(--border-subtle);
+    background: transparent;
+  }
+
+  [data-native-form] .choice-control:has(input:checked) {
+    border-color: var(--color-brand-600);
+  }
+
+  [data-native-poll-limit] {
+    display: none;
+  }
+
+  [data-native-form]:has(input[name="type"][value="multiple"]:checked)
+    [data-native-poll-limit] {
+    display: block;
+  }
+}
+
+/* Secciones numeradas (D124): `FormShell numbered` marca el contenedor y cada
+   `fieldset > legend` o bloque `[data-form-section] > :first-child` recibe
+   "1 ·", "2 ·"… sin tocar los formularios. El número va en la fuente de
+   títulos y en el violeta de la marca. */
+[data-form-numbered] {
+  counter-reset: form-section;
+}
+
+/* El número va pegado al rótulo: si la sección abre con una fila flexible
+   (rótulo + contador), el pseudoelemento se pone en el `label`, no en la
+   fila, para no quedar como un tercer ítem suelto. */
+[data-form-numbered] fieldset > legend::before,
+[data-form-numbered] [data-form-section] > label:first-child::before,
+[data-form-numbered]
+  [data-form-section]
+  > :first-child
+  > label:first-child::before {
+  counter-increment: form-section;
+  content: counter(form-section) " · ";
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--tint-brand-text);
+}

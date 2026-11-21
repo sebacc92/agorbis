@@ -1,0 +1,16 @@
+# Wrangler procesa este archivo para Workers Static Assets. La CSP con nonce se
+# sigue generando en Qwik únicamente para las respuestas dinámicas.
+
+/service-worker.js
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Type: application/javascript
+  X-Content-Type-Options: nosniff
+
+/build/*
+  Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable

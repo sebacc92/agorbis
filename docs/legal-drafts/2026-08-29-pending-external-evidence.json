@@ -1,0 +1,211 @@
+{
+  "schemaVersion": "agorbis.legal-draft.v1",
+  "status": "draft_not_active",
+  "createdAt": "2026-08-29",
+  "legalConclusion": "none",
+  "deploymentAuthorized": false,
+  "hashAlgorithm": "sha256-json-stringify-v1",
+  "relatedRiskGateIds": [
+    "privacy.retention-unreconciled",
+    "privacy.provider-locations-unverified",
+    "privacy.provider-retention-unverified",
+    "legal.transfer-safeguards-unverified",
+    "legal.sensitive-consent-0059-omitted"
+  ],
+  "activationRequirements": [
+    "This artifact must not be rendered, accepted, migrated, or treated as current while status is draft_not_active.",
+    "Activation requires a separate reviewed change to version constants, exact snapshots, hashes, tests, and a migration that is not part of this artifact.",
+    "External evidence fields must remain empty until the corresponding evidence is verified; this draft does not supply provider locations, countries, retention periods, contracts, or safeguards.",
+    "Risk acceptance is not a legal-compliance conclusion and does not change any evidence status to PASS."
+  ],
+  "documents": [
+    {
+      "documentType": "privacy",
+      "contentExport": "privacyContent",
+      "source": {
+        "version": "2026-08-25.1",
+        "contentSha256": "19826446051822fc347faaf114f1dc6f153b642c4e4706860e63bfb8373791af"
+      },
+      "proposed": {
+        "version": "2026-08-29.1",
+        "contentSha256": "efdb395f293b7b1af31d6d79a2c70457a007279fe1d23a7b655dad4a997d039e",
+        "localeContentSha256": {
+          "es": "0eb2f64bb2dba207a1a02dd076bb7661c5f9853417a757742cd9dacd8609f72c",
+          "en": "cb72d78689fa81124952b5ba759bfd83bf82dc41a71971b7949168365252c153"
+        }
+      },
+      "patches": [
+        {
+          "path": "/es/sections/2/bullets/5",
+          "value": "Medir el funcionamiento del producto con datos mínimos. Los plazos aplicables sólo deben publicarse después de reconciliar la implementación, la configuración efectiva y la evidencia contractual."
+        },
+        {
+          "path": "/en/sections/2/bullets/5",
+          "value": "Measure product health using minimal data. Applicable periods must be published only after reconciling implementation, effective configuration, and contractual evidence."
+        },
+        {
+          "path": "/es/sections/8/paragraphs/0",
+          "value": "Agorbis usa proveedores de infraestructura, base de datos, autenticación, correo y protección antiabuso. El registro público identifica a los proveedores y sus funciones conocidas; sus lugares de tratamiento y acceso, retención contractual y salvaguardas permanecen pendientes de evidencia externa cuando así se indica."
+        },
+        {
+          "path": "/en/sections/8/paragraphs/0",
+          "value": "Agorbis uses infrastructure, database, authentication, email, and abuse-prevention providers. The public register identifies providers and their known roles; their processing and access locations, contractual retention, and safeguards remain pending external evidence where indicated."
+        },
+        {
+          "path": "/es/sections/8/paragraphs/1",
+          "value": "Cloudflare está configurado para prestar DNS, Workers y Turnstile A/B. Esa descripción funcional no determina ni acredita países o lugares completos de tratamiento y acceso, plazos de retención de proveedor ni salvaguardas contractuales."
+        },
+        {
+          "path": "/en/sections/8/paragraphs/1",
+          "value": "Cloudflare is configured to provide DNS, Workers, and Turnstile A/B. That functional description neither determines nor proves the complete countries or locations of processing and access, provider retention periods, or contractual safeguards."
+        },
+        {
+          "path": "/es/sections/8/paragraphs/2",
+          "value": "Las ubicaciones, los países y los posibles accesos posteriores aplicables a Supabase, Resend y Cloudflare siguen pendientes de verificación. Agorbis no publica un destino por inferencia ni presenta el registro de subencargados como evidencia de un dato todavía pendiente."
+        },
+        {
+          "path": "/en/sections/8/paragraphs/2",
+          "value": "The locations, countries, and possible onward access applicable to Supabase, Resend, and Cloudflare remain pending verification. Agorbis does not infer a destination or present the subprocessor register as evidence for information that is still pending."
+        },
+        {
+          "path": "/es/sections/8/paragraphs/3",
+          "value": "Podés seguir leyendo el contenido público sin crear una cuenta. La baja de una cuenta no se presenta como prueba de eliminación inmediata o completa en cada proveedor: ese alcance y sus plazos permanecen pendientes de reconciliación y evidencia."
+        },
+        {
+          "path": "/en/sections/8/paragraphs/3",
+          "value": "You may continue reading public content without creating an account. Account deletion is not presented as proof of immediate or complete deletion by every provider: that scope and its periods remain pending reconciliation and evidence."
+        },
+        {
+          "path": "/es/sections/8/paragraphs/4",
+          "value": "La existencia, el alcance y la suficiencia de los contratos, DPA, cláusulas y demás salvaguardas aplicables permanecen pendientes de evidencia y revisión. Un contrato genérico, una cláusula extranjera o una aceptación posterior no se presentan como sustituto del mecanismo argentino que corresponda."
+        },
+        {
+          "path": "/en/sections/8/paragraphs/4",
+          "value": "The existence, scope, and sufficiency of applicable contracts, DPAs, clauses, and other safeguards remain pending evidence and review. A generic contract, foreign clause, or later acceptance is not presented as a substitute for the applicable Argentine mechanism."
+        },
+        {
+          "path": "/es/sections/9/paragraphs/0",
+          "value": "El cronograma interno de conservación y su correspondencia con la implementación efectiva todavía no están reconciliados. Esta política no publica como verificados plazos internos ni plazos de proveedores."
+        },
+        {
+          "path": "/en/sections/9/paragraphs/0",
+          "value": "The internal retention schedule and its correspondence with effective implementation have not yet been reconciled. This policy does not publish internal or provider periods as verified."
+        },
+        {
+          "path": "/es/sections/9/paragraphs/1",
+          "value": "El alcance efectivo del borrado de cuenta, de los datos derivados, del contenido público y de las copias mantenidas por proveedores sigue pendiente de reconciliación y evidencia. No se promete una eliminación inmediata, completa o selectiva que no haya sido verificada."
+        },
+        {
+          "path": "/en/sections/9/paragraphs/1",
+          "value": "The effective scope of account deletion, derived data, public content, and copies held by providers remains pending reconciliation and evidence. No immediate, complete, or selective deletion is promised unless it has been verified."
+        },
+        {
+          "path": "/es/sections/9/paragraphs/2",
+          "value": "No existe todavía un backup productivo verificado. No se afirma que las copias de respaldo roten, venzan o permitan una restauración determinada hasta contar con evidencia de un backup real y de una prueba de restauración."
+        },
+        {
+          "path": "/en/sections/9/paragraphs/2",
+          "value": "No verified production backup currently exists. Backup rotation, expiry, or a particular restoration capability is not asserted until there is evidence of a real backup and a restore test."
+        }
+      ]
+    },
+    {
+      "documentType": "international_transfer_notice",
+      "contentExport": "internationalTransferNoticeContent",
+      "source": {
+        "version": "2026-08-25.1",
+        "contentSha256": "64bf705727ca0003f76f3d422402f42bff97dc433f138dc432f9678fae1c505a"
+      },
+      "proposed": {
+        "version": "2026-08-29.1",
+        "contentSha256": "052a72a73375da6930313cbc9f2736f8b63f0ad321342b9fdd66f727a34a1baa",
+        "localeContentSha256": {
+          "es": "b1e6a44da8ef839c208f632adbedaf127c30f60509581e2f2d4f70494ea71883",
+          "en": "d34a3893733f2e76a3b1889db8f4fa61685bad68d83775d0d014e56a069ce776"
+        }
+      },
+      "patches": [
+        {
+          "path": "/es/summary",
+          "value": "Este aviso identifica las transferencias necesarias para una cuenta y distingue los datos conocidos de las ubicaciones, la retención y las salvaguardas que siguen pendientes de evidencia externa."
+        },
+        {
+          "path": "/en/summary",
+          "value": "This notice identifies transfers needed for an account and distinguishes known information from locations, retention, and safeguards that remain pending external evidence."
+        },
+        {
+          "path": "/es/sections/0/paragraphs/0",
+          "value": "Antes de iniciar el flujo de una nueva cuenta, Agorbis presenta una acción afirmativa separada de Términos, Privacidad, edad mínima y Normas comunitarias, y registra el resultado técnico junto con la versión del aviso."
+        },
+        {
+          "path": "/en/sections/0/paragraphs/0",
+          "value": "Before starting a new-account flow, Agorbis presents an affirmative action separate from the Terms, Privacy, minimum age, and Community rules, and records the technical result with the notice version."
+        },
+        {
+          "path": "/es/sections/0/paragraphs/1",
+          "value": "La existencia de ese flujo o de una aceptación registrada no acredita por sí sola una base jurídica suficiente ni subsana la omisión de la revisión 0059 sobre consentimiento sensible. Mientras esa revisión siga omitida, Agorbis no debe describirse como jurídicamente conforme."
+        },
+        {
+          "path": "/en/sections/0/paragraphs/1",
+          "value": "The existence of that flow or a recorded acceptance does not by itself prove a sufficient legal basis or cure the omission of sensitive-consent review 0059. While that review remains omitted, Agorbis must not be described as legally compliant."
+        },
+        {
+          "path": "/es/sections/1/bullets/0",
+          "value": "Supabase Pte. Ltd. presta base de datos, Auth y Storage y, para esas funciones, recibe las categorías de datos enviadas por la aplicación. Sus lugares completos de tratamiento y acceso permanecen pendientes de evidencia externa."
+        },
+        {
+          "path": "/en/sections/1/bullets/0",
+          "value": "Supabase Pte. Ltd. provides database, Auth, and Storage services and receives the data categories sent by the application for those functions. Its complete processing and access locations remain pending external evidence."
+        },
+        {
+          "path": "/es/sections/1/bullets/1",
+          "value": "Plus Five Five, Inc., que opera como Resend, presta el envío de confirmaciones, enlaces de acceso, recuperación y avisos de seguridad. Sus lugares completos de tratamiento y acceso permanecen pendientes de evidencia externa."
+        },
+        {
+          "path": "/en/sections/1/bullets/1",
+          "value": "Plus Five Five, Inc., doing business as Resend, sends confirmations, sign-in links, recovery messages, and security notices. Its complete processing and access locations remain pending external evidence."
+        },
+        {
+          "path": "/es/sections/1/bullets/2",
+          "value": "Cloudflare, Inc. presta DNS, Workers y Turnstile A/B. Esas funciones pueden procesar solicitudes, respuestas y señales antiabuso; sus lugares completos de tratamiento y acceso permanecen pendientes de evidencia externa."
+        },
+        {
+          "path": "/en/sections/1/bullets/2",
+          "value": "Cloudflare, Inc. provides DNS, Workers, and Turnstile A/B. Those functions may process requests, responses, and abuse-prevention signals; its complete processing and access locations remain pending external evidence."
+        },
+        {
+          "path": "/es/sections/2/title",
+          "value": "Destinos, retención y salvaguardas pendientes"
+        },
+        {
+          "path": "/en/sections/2/title",
+          "value": "Destinations, retention, and safeguards pending evidence"
+        },
+        {
+          "path": "/es/sections/2/paragraphs/0",
+          "value": "Agorbis todavía no cuenta con evidencia suficiente para publicar la lista completa y exacta de ubicaciones y países desde los que cada proveedor o subencargado trata o accede a datos. No se atribuye un destino por inferencia."
+        },
+        {
+          "path": "/en/sections/2/paragraphs/0",
+          "value": "Agorbis does not yet have sufficient evidence to publish the complete and exact list of locations and countries from which each provider or subprocessor processes or accesses data. No destination is attributed by inference."
+        },
+        {
+          "path": "/es/sections/2/paragraphs/1",
+          "value": "Los plazos de retención de proveedores, las obligaciones contractuales y el mecanismo argentino aplicable a estas transferencias siguen pendientes de evidencia y revisión. No se afirma que un DPA genérico, cláusulas extranjeras, cifrado, minimización o una aceptación posterior constituyan una salvaguarda suficiente."
+        },
+        {
+          "path": "/en/sections/2/paragraphs/1",
+          "value": "Provider retention periods, contractual duties, and the Argentine mechanism applicable to these transfers remain pending evidence and review. A generic DPA, foreign clauses, encryption, minimization, or later acceptance is not asserted to be a sufficient safeguard."
+        },
+        {
+          "path": "/es/sections/4/paragraphs/0",
+          "value": "Podés solicitar la baja de la cuenta o escribir al contacto del responsable. La baja no se presenta como prueba de que cada proveedor haya detenido o eliminado inmediatamente todo tratamiento: el alcance y los plazos posteriores siguen pendientes de evidencia."
+        },
+        {
+          "path": "/en/sections/4/paragraphs/0",
+          "value": "You may request account deletion or write to the controller contact. Deletion is not presented as proof that every provider immediately stopped or deleted all processing: the subsequent scope and periods remain pending evidence."
+        }
+      ]
+    }
+  ]
+}

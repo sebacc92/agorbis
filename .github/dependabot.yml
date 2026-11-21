@@ -1,0 +1,87 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/Argentina/Buenos_Aires
+    open-pull-requests-limit: 5
+    # Misma cuarentena que `minimumReleaseAge: 10080` de pnpm-workspace.yaml:
+    # una PR que propone una versión de menos de 7 días fallaría igual en
+    # `pnpm install` con la regla estricta, así que no tiene sentido abrirla.
+    cooldown:
+      default-days: 7
+    ignore:
+      # engines fija Node 22.x en producción y CI; los tipos de un Node más
+      # nuevo dejan usar APIs que el runtime no tiene. Sacar este ignore en el
+      # mismo cambio que mueva `engines.node`.
+      - dependency-name: "@types/node"
+        update-types:
+          - version-update:semver-major
+    # Dependabot asigna cada dependencia al primer grupo que coincide: las
+    # familias van antes que el grupo de rutina. Cada familia se mueve junta
+    # porque sus paquetes se prueban y publican en conjunto; una PR suelta de
+    # uno solo deja el árbol en una combinación que upstream nunca probó.
+    # Las familias aceptan también majors: un major de TypeScript sin el de
+    # typescript-eslint, o de vite sin vitest, no compila.
+    groups:
+      # Core, router y el plugin de ESLint salen con la misma versión beta. Antes
+      # de mergear, seguir el checklist de D75 (middleware cloudflare upstream
+      # contra src/lib/qwik-cloudflare-worker-router.ts, firmas que intercepta
+      # adapters/cloudflare-workers/qwik-log-sanitizer.ts y e2e).
+      qwik:
+        patterns:
+          - "@qwik.dev/*"
+          - eslint-plugin-qwik
+      # Cambia pnpm-lock.yaml y la closure de Wrangler: lockHash y closureHash
+      # de scripts/exceptional-wrangler-integrity.mjs se re-baselinean con el
+      # protocolo cross-store de docs/PRODUCTION_RUNBOOK.md en un commit
+      # `toolchain:` propio; hasta entonces `release-gates` falla, como debe.
+      cloudflare:
+        patterns:
+          - wrangler
+          - "@cloudflare/*"
+          - miniflare
+          - workerd
+      vite-vitest:
+        patterns:
+          - vite
+          - vitest
+          - "@vitest/*"
+          - "@tailwindcss/vite"
+          - tailwindcss
+      typescript:
+        patterns:
+          - typescript
+          - typescript-eslint
+      # La versión del CLI (2.115.0) también está fijada en scripts de pins,
+      # backup, restore y D72 (p. ej. scripts/supabase-prepare-ci-pins.mjs;
+      # `grep -rl` de la versión vieja los lista): actualizarlos en la misma PR
+      # o fallan sus tests.
+      supabase:
+        patterns:
+          - supabase
+          - "@supabase/*"
+      routine-dependencies:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:30"
+      timezone: America/Argentina/Buenos_Aires
+    open-pull-requests-limit: 3
+    cooldown:
+      default-days: 7
+    # Las actions van fijadas; agruparlas evita una PR por action y deja ver
+    # en una sola corrida de CI si el conjunto sigue funcionando.
+    groups:
+      github-actions:
+        patterns:
+          - "*"

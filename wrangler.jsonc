@@ -1,0 +1,51 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "agorbis",
+  "account_id": "4d78fb10c1ae65281ec851479d5045dc",
+  "main": "dist/_worker.js",
+  "compatibility_date": "2026-08-25",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "agorbis.com", "custom_domain": true },
+    { "pattern": "www.agorbis.com", "custom_domain": true },
+  ],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+  },
+  "triggers": {
+    "crons": [
+      "10 * * * *",
+      "5 0 * * *",
+      "25 0 * * *",
+      "20 3 * * *",
+      "40 3 * * *",
+    ],
+  },
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": false,
+    },
+    "traces": { "enabled": false },
+  },
+  "limits": { "cpu_ms": 30000 },
+  "keep_vars": false,
+  "secrets": {
+    "required": ["CRON_SECRET", "SUPABASE_SECRET_KEY", "TURNSTILE_SECRET"],
+  },
+  "vars": {
+    "AGORBIS_LAUNCH_MODE": "open",
+    "AGORBIS_RUNTIME": "cloudflare-workers",
+    "PUBLIC_FACEBOOK_AUTH_ENABLED": "false",
+    "PUBLIC_GOOGLE_AUTH_ENABLED": "true",
+    "PUBLIC_SITE_URL": "https://agorbis.com",
+    "PUBLIC_SUPABASE_ANON_KEY": "sb_publishable_G8zV_-e3-KIm7sWr6UdpaQ_dlmOED8s",
+    "PUBLIC_SUPABASE_URL": "https://ibtvlvpxwourrxwcrfkf.supabase.co",
+    "TURNSTILE_HOSTNAMES": "agorbis.com",
+  },
+}

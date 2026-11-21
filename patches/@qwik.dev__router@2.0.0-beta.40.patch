@@ -1,0 +1,28 @@
+diff --git a/lib/chunks/head.qwik.mjs b/lib/chunks/head.qwik.mjs
+index 6bce899c6e7ffd433c185a4b4c7d9009f44e3db6..46958f583bd3f6efdf05f40ced549e1cdf8c7c5c 100644
+--- a/lib/chunks/head.qwik.mjs
++++ b/lib/chunks/head.qwik.mjs
+@@ -297,7 +297,22 @@ var resolveRouteLoaderByHash = (routeLoaders, loaderId) => {
+ 	if (!loaderRequestEv) {
+ 		url.pathname = pathname;
+ 		url.search = filteredSearch;
+-		const request = new Request(url, rootRequestEv.request);
++		const sourceRequest = rootRequestEv.request;
++		// La acción ya consumió el formulario; los loaders conservan su contexto
++		// HTTP sin intentar transferir otra vez el cuerpo que parseBody cacheó.
++		const request = new Request(url, sourceRequest.bodyUsed ? {
++			method: sourceRequest.method,
++			headers: sourceRequest.headers,
++			cache: sourceRequest.cache,
++			credentials: sourceRequest.credentials,
++			integrity: sourceRequest.integrity,
++			keepalive: sourceRequest.keepalive,
++			mode: sourceRequest.mode,
++			redirect: sourceRequest.redirect,
++			referrer: sourceRequest.referrer,
++			referrerPolicy: sourceRequest.referrerPolicy,
++			signal: sourceRequest.signal
++		} : sourceRequest);
+ 		loaderRequestEv = Object.create(rootRequestEv, {
+ 			originalUrl: {
+ 				value: new URL(url),
