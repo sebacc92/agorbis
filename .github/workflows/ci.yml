@@ -39,9 +39,9 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
         with:
           standalone: true
 
@@ -50,7 +50,7 @@ jobs:
       # active su caché de pnpm por defecto; acá no hay nada que guardar (las
       # dependencias se instalan desde un store aislado y efímero) y el post-job
       # fallaba con "Path Validation Error" (corrida 55), así que se apaga.
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22.22.0
           package-manager-cache: false
@@ -112,9 +112,9 @@ jobs:
     # por fallo, 30 min cortaba la corrida sin terminar (run 40906527104).
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
         with:
           standalone: true
 
@@ -123,7 +123,7 @@ jobs:
       # active su caché de pnpm por defecto; acá no hay nada que guardar (las
       # dependencias se instalan desde un store aislado y efímero) y el post-job
       # fallaba con "Path Validation Error" (corrida 55), así que se apaga.
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22.22.0
           package-manager-cache: false
@@ -215,7 +215,7 @@ jobs:
       # El inventario D72 no puede saltarse por falta de toolchain en este job.
       AGORBIS_REQUIRE_PINNED_TOOLCHAIN: "1"
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Instalar el lock de sistema verificado
         shell: bash
@@ -257,7 +257,7 @@ jobs:
           test "$(/usr/bin/git --version)" = "git version 2.43.0"
           printf '%s  %s\n' 'eb54b535467e0975c1284d4c4d08eea779aeb248a5d34b02e2ee171382e22201' '/usr/bin/git' | sha256sum --check --strict
 
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
         with:
           standalone: true
 
@@ -266,7 +266,7 @@ jobs:
       # active su caché de pnpm por defecto; acá no hay nada que guardar (las
       # dependencias se instalan desde un store aislado y efímero) y el post-job
       # fallaba con "Path Validation Error" (corrida 55), así que se apaga.
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22.22.0
           package-manager-cache: false
@@ -344,9 +344,9 @@ jobs:
     # `continue-on-error` a nivel de job (marcaba éxito aunque fallara un paso
     # y nadie se enteraba del vencimiento): sólo el audit `low` es informativo.
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
         with:
           standalone: true
 
@@ -355,7 +355,7 @@ jobs:
       # active su caché de pnpm por defecto; acá no hay nada que guardar (las
       # dependencias se instalan desde un store aislado y efímero) y el post-job
       # fallaba con "Path Validation Error" (corrida 55), así que se apaga.
-      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22.22.0
           package-manager-cache: false
